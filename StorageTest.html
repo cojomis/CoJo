@@ -1,0 +1,30 @@
+<html>
+<head>
+    <script src="SQLDatabase.js"></script>
+    <script src="StorageController.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    
+    <script type="text/javascript">
+        
+        var tmp = new SQLDatabaseController();
+        
+        $.getJSON('example.json', gotJSON);
+        
+        
+        function gotJSON(obj) {
+            tmp.Update(obj);
+            
+            $.getJSON('exampleSelect.json', function(obji) {alert("select got");tmp.Read(obji);});
+        }
+        
+    </script>
+    
+</head>
+
+<body>
+    
+    
+</body>
+
+
+</html>
