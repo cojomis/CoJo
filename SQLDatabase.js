@@ -1,30 +1,57 @@
+/*
+ *SQLDatabase
+ *Manages the creation of transactions and execution of  SQL statements. Ensures the database to created correctly.
+ *
+ */
+
 function SQLDatabase(inpCallback) {
-    alert("in constructor");
-    this.database = window.openDatabase("CojoDB", "1.0", "CoJo", 200000);
-    this.database.transaction(this.createDB);
+    // Database configuration (Created if the database does not already exists)
+    this.database = window.openDatabase("CoJoaaaffbffgGGagFFFaaaFf", "1.0", "CojoaaaffbfggGGagFFFaaaFf", 200000, this.databaseReady.bind(this));
     this.currentStatement = "";
+    
+    // When results are received (i.e. Select), the listener is called to inform them of the results
     this.callback = inpCallback;
 
 }
 
 SQLDatabase.prototype = {
-    createDB: function() {
-        alert("CREATING DB");
-        tx.executeSql('CREATE TABLE IF NOT EXISTS STORY ("STORY_ID" INTEGER ,"Headline" VARCHAR ,"Story_Date" VARCHAR ,"Story_Time" VARCHAR ,PRIMARY KEY ( "STORY_ID" ))');
+    // If the database has to be created for the first time, this method is called which will instruct the database to create the relevant tables
+    databaseReady: function(db) {
+        this.database.transaction(this.createDB, this.errorTable, this.successTable);   
     },
-      
+    
+    databaseError: function(DB) {
+        alert("DB ERROR");
+    },
+    
+    createDB: function(tx) {
+        tx.executeSql('CREATE TABLE STORY ("ID" INTEGER ,"Headline" VARCHAR ,"Story_Date" VARCHAR ,"Story_Time" VARCHAR ,"Latitude" VARCHAR ,"Longitude" VARCHAR ,PRIMARY KEY ( "ID" ))');
+        tx.executeSql('CREATE TABLE IMAGE ("ID" INTEGER ,"URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(ID))');
+        tx.executeSql('CREATE TABLE VIDEO ("ID" INTEGER ,"URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(ID))');
+        tx.executeSql('CREATE TABLE AUDIO ("ID" INTEGER, "URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ("ID"), FOREIGN KEY (STORY_ID) REFERENCES STORY(ID))')
+        tx.executeSql('CREATE TABLE NOTE ("ID" INTEGER ,"Text" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(ID))');
+    },
+    
+    errorTable: function(err) {
+        alert("TABLE ERROR");
+        alert(err.code);
+    },
+    
+    successTable: function(tx, res) {
+        alert("SUCCESS TABLE");
+    },
+    
     Create: function(statement) {
-        alert("CREATE");
         this.currentStatement = statement;
         this.database.transaction(this.executeCreate.bind(this));
     },
     
     executeCreate: function(tx) {
-        alert("execute sql");
         tx.executeSql(this.currentStatement, [], this.executeCreateComplete.bind(this));
     },
     
     executeCreateComplete: function(tx, res) {
+        alert(res.insertId);
         this.callback.insertCallback(res);
     },
     
@@ -34,14 +61,15 @@ SQLDatabase.prototype = {
     },
     
     executeRead: function (tx) {
-        alert("CREATING TRANS");
-        tx.executeSql(this.currentStatement, [], this.executeReadComplete.bind(this));
+        tx.executeSql(this.currentStatement, [], this.executeReadComplete.bind(this), this.executeReadError);
+    },
+    
+    executeReadError: function(tx,err) {
+        alert(err.code);  
     },
     
     executeReadComplete: function(tx, res) {
-        alert("SUCCESS READ");
-        alert(res.rows.length);
-        this.callback.readCallback(res);
+        this.callback.readCallback(res).bind(this.callback);
     },
     
     Update: function(statement) {

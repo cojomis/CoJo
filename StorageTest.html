@@ -6,16 +6,40 @@
     
     <script type="text/javascript">
         
-        var tmp = new SQLDatabaseController();
+        function PageController() {
+            
+        }
         
-        $.getJSON('example.json', gotJSON);
+        PageController.prototype = {
+            handleResponse: function(res) {
+                alert("Length: " + res.rows.length);
+                document.getElementById("UpdateText").innerHTML = res.rows.item(0).Text;
+            }
+        }
+        
+        var pageH = new PageController();
+        var tmp = new SQLDatabaseController(pageH);
+        
+        
+        $.getJSON('exampleInsert.json', gotJSON);
         
         
         function gotJSON(obj) {
             tmp.Update(obj);
             
-            $.getJSON('exampleSelect.json', function(obji) {alert("select got");tmp.Read(obji);});
         }
+        
+        function getData() {
+            $.getJSON('exampleSelect.json', function(obji) {
+                alert("select got");
+                var res = tmp.Read(obji);
+                //alert("HTML: " + res);
+                
+                
+                });
+        }
+        
+        
         
     </script>
     
@@ -23,6 +47,8 @@
 
 <body>
     
+    <input type="button" value="GO" onclick="getData();" />
+    <p id="UpdateText">Hello</p>
     
 </body>
 
