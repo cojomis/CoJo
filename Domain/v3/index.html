@@ -1,0 +1,51 @@
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="SQLDatabase.js"></script>
+    <script src="StorageController.js"></script>
+    <script src="DomainController.js"></script>
+    
+    <script type="text/javascript">
+        
+        var dController = new DomainController(this);
+        var newJSON;
+        var oldJSON;
+        var selectJSON;
+        
+        $.getJSON("new.json", gotNewJSON);
+        $.getJSON("old.json", gotOldJSON);
+        $.getJSON("exampleSelect.json", gotSelectJSON);
+        
+        function gotNewJSON(obj) {
+            alert("got");
+            newJSON = obj;
+        }
+        
+        function gotOldJSON(obj) {
+            alert("got");
+            oldJSON = obj;
+        }
+        
+        function Check() {
+            dController.UpdateState(newJSON, oldJSON);
+        }
+        
+        function GetStories() {
+            dController.Read(selectJSON);
+        }
+        
+        function gotSelectJSON(obj) {
+            alert("got");
+            selectJSON = obj;
+        }
+        
+    </script>
+    
+</head>
+
+<body>
+    <input type="button" value="GO" onclick="Check();" />
+    <input type="button" value="Get Stories" onclick="GetStories()";
+</body>
+
+</html>
