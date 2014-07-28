@@ -1,0 +1,85 @@
+.container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.topNavigationBar {
+    position: absolute;
+    height: 64px;
+    width:320px;
+    left:0;
+    top: 0;
+    background-color: #74D7ED;
+}
+
+.contentBox {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 320px;
+    height: 455px;
+    overflow: hidden;
+}
+
+.contentBoxHome {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    width: 320px;
+    height: 506px;
+    overflow: hidden;
+}
+
+.tabBar {
+    position: absolute;
+    top: 497px;
+    left: 0;
+    height: 73px;
+    width: 320px;
+    background-image: url('../img/tabBar.png');
+}
+
+.rightNavBarItem {
+    position: absolute;
+    top: 30px;
+    left: 258px;
+    height: 17px;
+    width: 42px;
+    text-align: right;
+}
+
+.leftNavBarItem {
+    position: absolute;
+    left: 20px;
+    top: 30px;
+    height: 17px;
+    width: 42px;
+}
+
+.navBarTitle {
+    position: absolute;
+    left: 110px;
+    top: 30px;
+    width: 100px;
+    height: 20px;
+    text-align: center;
+}
+
+p.navTitle {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+}
+
+p.navBarItem {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    font-size: 17px;
+    color: white;
+}

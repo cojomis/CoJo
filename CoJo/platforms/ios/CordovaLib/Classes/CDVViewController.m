@@ -111,6 +111,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    //[[webView scrollView] setScrollEnabled:NO];
+    [[webView scrollView] setBounces:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
