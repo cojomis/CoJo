@@ -1,7 +1,7 @@
 function DomainController(inpCallback) {
 
     this.MediaBrowser = new MediaController(this);
-    this.StorageC = new StorageController(this);
+    this.StorageC = new SQLStorageController(this);
     
     this.callback = inpCallback;
     this.URI = "";

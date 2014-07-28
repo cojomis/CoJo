@@ -86,7 +86,7 @@ Table.prototype = {
         }
         else {
             
-            this.callback.RowSelected(this.rows[theDiv.id].text);
+            this.callback.RowSelected(this.rows[theDiv.id].item_id);
         }
         
         

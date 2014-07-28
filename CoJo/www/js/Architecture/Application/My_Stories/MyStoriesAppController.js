@@ -51,9 +51,9 @@ MyStoriesAppController.prototype = {
         window.location.reload();
     },
     
-    RowSelected: function(storyHeadline) {
+    RowSelected: function(storyID) {
         for (i = 0; i < this.newState.Story.length; i++) {
-            if (this.newState.Story[i].Headline == storyHeadline) {
+            if (this.newState.Story[i].STORY_ID == storyID) {
                 this.navigateToPage('summary.html', this.newState.Story[i].STORY_ID);
             }
         }
@@ -66,7 +66,7 @@ MyStoriesAppController.prototype = {
         this.UpdateState();
     },
     
-    togglePageState: function(res) {
+    togglePageState: function() {
         if (!this.pageState) {
             this.pageState = 1;
             

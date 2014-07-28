@@ -5,7 +5,7 @@ function Pair(inpKey,inpValue) {
 }
 
 
-function StorageController(inpCallback) {
+function SQLStorageController(inpCallback) {
     this.newState = new Array();
     this.oldState = new Array();
     
@@ -22,7 +22,7 @@ function StorageController(inpCallback) {
     
 }
 
-StorageController.prototype = {
+SQLStorageController.prototype = {
     
     Read: function(arr) {
         this.returnArray = arr;
