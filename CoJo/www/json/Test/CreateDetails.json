@@ -1,0 +1,16 @@
+{
+    "Page": {
+        "Name": "Summary",
+        "Section": [
+            {
+                "Name": "Details",
+                "canEdit": "True",
+                "Type": "Table",
+                "Data": {
+                    "Data": {}
+                }
+            }
+     
+        ]
+    }
+}

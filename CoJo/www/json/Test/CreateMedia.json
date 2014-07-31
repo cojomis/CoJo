@@ -1,0 +1,46 @@
+{
+    "Page": {
+        "Name": "Media",
+        "Section": [
+            {
+                "Name": "Image",
+                "canEdit": "True",
+                "Type": "Gallery",
+                "SubType": "Image",
+                "Data": {
+                    "Identifier": "ID",
+                    "Value": "URI",
+                    "Data": [
+
+                    ]
+                }
+            },
+            {
+                "Name": "Video",
+                "canEdit": "True",
+                "Type": "Gallery",
+                "SubType": "Video",
+                "Data": {
+                    "Identifier": "ID",
+                    "Value": "URI",
+                    "Data": [
+
+                    ]
+                }
+            },
+            {
+                "Name": "Audio",
+                "canEdit": "True",
+                "Type": "Table",
+                "Data": {
+                    "Identifier": "ID",
+                    "Value": "URI",
+                    "Data": [
+
+                    ]
+                }
+            }
+     
+        ]
+    }
+}

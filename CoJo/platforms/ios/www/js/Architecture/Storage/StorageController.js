@@ -5,7 +5,7 @@ function Pair(inpKey,inpValue) {
 }
 
 
-function StorageController(inpCallback) {
+function SQLStorageController(inpCallback) {
     this.newState = new Array();
     this.oldState = new Array();
     
@@ -22,7 +22,7 @@ function StorageController(inpCallback) {
     
 }
 
-StorageController.prototype = {
+SQLStorageController.prototype = {
     
     Read: function(arr) {
         this.returnArray = arr;
@@ -261,7 +261,15 @@ StorageController.prototype = {
                 
                 if (vals != "") {
                     vals = vals.substr(0, vals.length-1);
-                    var statement = "UPDATE " + arr[0] + " SET " + vals + " WHERE ID=" + obj[0].value;
+                    var statement = "";
+                    
+                    if (arr[0] == "Story") {
+                        statement = "UPDATE " + arr[0] + " SET " + vals + " WHERE STORY_ID='" + obj[0].value + "'";
+                    } else {
+                        statement = "UPDATE " + arr[0] + " SET " + vals + " WHERE ID='" + obj[0].value + "'";
+
+                    }
+                    
                     alert(statement);
                 
                     this.statements.push(statement);

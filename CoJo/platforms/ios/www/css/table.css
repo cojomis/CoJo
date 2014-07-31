@@ -13,6 +13,17 @@
     margin: 0;
 }
 
+.widgetContainer {
+    position: relative;
+    float: left;
+    left:0px;
+    width:320px;
+    height:455px;
+    background-image:none;
+    padding: 0;
+    margin: 0;
+}
+
 .row {
     position: relative;
     float: left;

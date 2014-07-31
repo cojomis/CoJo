@@ -1,24 +1,39 @@
 function Story(inpHeadline) {
+    var d = new Date();
+    
     this.STORY_ID = "NEW";
     this.Headline = inpHeadline;
+    this.Story_Date = d.toDateString();
+    this.Story_time = d.toTimeString();
 }
 
 function MyStoriesAppController() {
     alert("In constructor");
     this.dController = new DomainController(this);
-    this.storiesTable = new Table("table", this);
+    //this.storiesTable = new Table("table", this);
 
-    alert(window.location);
+    //alert(window.location);
     
     this.oldState = "";
     this.newState = "";
     
-    this.pageState = 0;
+    //this.pageState = 0;
     
     this.prepare();
+    
+    //$.getJSON("json/Test/CreatePage.json", this.gotPageCreation.bind(this));
 }
 
 MyStoriesAppController.prototype = {
+    
+    gotPageCreation: function(json) {
+        alert("GOT PAGE");
+        alert(json.Page.Section[0].Name);
+        json.Page.Section[0].Data.Data = this.newState.Story;
+        this.navigation = new Navigation(json, this);
+        this.navigation.Render(document.getElementById("appContainer"));
+    },
+    
     prepare: function() {
         alert("Getting JSON");
         $.getJSON("json/My_Stories/prepare.json", this.gotJSON.bind(this));
@@ -33,14 +48,18 @@ MyStoriesAppController.prototype = {
         this.oldState = JSON.parse(JSON.stringify(res));
         this.newState = JSON.parse(JSON.stringify(res));
         
-        for(i = 0; i < res.Story.length; i++) {
+        /*for(i = 0; i < res.Story.length; i++) {
             alert(res.Story[i].Headline);
             this.storiesTable.AddRow(res.Story[i].Headline, res.Story[i].STORY_ID);
-        }
+        }*/
+        
+        $.getJSON("json/Test/CreatePage.json", this.gotPageCreation.bind(this));
     },
     
     navigateToPage: function(page, storyID) {
         alert("Go to page: " + page + " with ID " + storyID);
+        var url = page + "?id=" + storyID;
+        window.location = url;
     },
     
     UpdateState: function() {
@@ -51,57 +70,27 @@ MyStoriesAppController.prototype = {
         window.location.reload();
     },
     
-    RowSelected: function(storyHeadline) {
-        for (i = 0; i < this.newState.Story.length; i++) {
-            if (this.newState.Story[i].Headline == storyHeadline) {
-                this.navigateToPage('summary.html', this.newState.Story[i].STORY_ID);
-            }
-        }
+    RowSelected: function(data) {
+        alert("ROW SELECTED WITH STORY ID: " + data.STORY_ID);
+        var url = "summary.html?id=" + data.STORY_ID;
+        window.location = url;
     },
     
-    AddListener: function() {
+    
+    AddItem: function() {
         var newStory = new Story("NEW STORY");
         this.newState.Story.push(newStory);
         
         this.UpdateState();
     },
     
-    togglePageState: function(res) {
-        if (!this.pageState) {
-            this.pageState = 1;
-            
-            var editOptions = document.getElementById("EditOptions");
-            editOptions.style.display = "block";
-            
-            var editButton = document.getElementById("Edit");
-            editButton.style.display = "none";
-            
-            var doneButton = document.getElementById("Done");
-            doneButton.style.display = "block";
-            
-            this.storiesTable.SetState(1);
-        } else {
-            this.pageState = 0;
-            
-            var editOptions = document.getElementById("EditOptions");
-            editOptions.style.display = "none";
-            
-            var editButton = document.getElementById("Edit");
-            editButton.style.display = "block";
-            
-            var doneButton = document.getElementById("Done");
-            doneButton.style.display = "none";
-            
-            this.storiesTable.SetState(0);
-            
-            this.UpdateState();
+    tabItemSelected: function(data) {
+        if (data.id == "media") {
+            this.navigateToPage("media.html", this.newState.Story[0].STORY_ID);
         }
-        
-        alert("Done");
-        
-    },
+    }
     
-    deleteFromTable: function() {
+    /*deleteFromTable: function() {
         this.storiesTable.DeleteSelectedItems();
     },
     
@@ -116,5 +105,5 @@ MyStoriesAppController.prototype = {
         //this.UpdateState();
         
         //alert(JSON.stringify(this.newState));
-    }
+    }*/
 }

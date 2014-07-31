@@ -34,6 +34,7 @@ DomainController.prototype = {
     },
     
     captureImage: function(storyID) {
+        alert("IN DCONTROLLER");
         this.story = storyID;
         this.MediaBrowser.captureImage();
     },
@@ -50,12 +51,13 @@ DomainController.prototype = {
     
     retrievedImage: function(inpURI) {
         this.URI = inpURI;
-        // PASS TO APPLICATION LAYER
+        this.callback.retrievedImage(inpURI);
+
     },
     
     retrievedVideo: function(inpURI) {
-        alert("RETRIEVED VIDEO");
-        // PASS TO APPLICATION LAYER
+        this.URI = inpURI;
+        this.callback.retrievedVideo(inpURI);
     },
     
     retrievedAudio: function(inpURI) {

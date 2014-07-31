@@ -1,0 +1,20 @@
+{
+    "Page": {
+        "Name": "My Stories",
+        "Section": [
+            {
+                "Name": "Stories",
+                "canEdit": "True",
+                "Type": "Table",
+                "Data": {
+                    "Identifier": "STORY_ID",
+                    "Value": "Headline",
+                    "Data": [
+
+                    ]
+                }
+            }
+     
+        ]
+    }
+}

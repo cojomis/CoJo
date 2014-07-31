@@ -35,6 +35,12 @@
         <script src="js/Architecture/Storage/StorageController.js"></script>
         <script src="js/Architecture/Storage/Media.js"></script>
         <script src="js/Architecture/Domain/DomainController.js"></script>
+        <script src="js/Architecture/Application/Generator/TableWidget.js"></script>
+        <script src="js/Architecture/Application/Generator/TabBar.js"></script>
+        <script src="js/Architecture/Application/Generator/Section.js"></script>
+        <script src="js/Architecture/Application/Generator/Content.js"></script>
+        <script src="js/Architecture/Application/Generator/Navigation.js"></script>
+        
         <script src="js/Architecture/Application/My_Stories/MyStoriesAppController.js"></script>
         
         
@@ -51,8 +57,8 @@
         </script>
     </head>
     <body onload="pageLoaded()">
-    <div class="container">
-            <div class="topNavigationBar">
+    <div class="container" id="appContainer">
+            <!--<div class="topNavigationBar">
                 <div id="EditOptions" class="leftNavBarItem" style="display: none;" onclick="appController.deleteFromTable();">
                 
                     <p class="navBarItem">Delete</p>
@@ -72,7 +78,7 @@
             
                 <div id="table" class="tableContainer"></div>
             
-            </div>
+            </div>-->
             
     </div>
         

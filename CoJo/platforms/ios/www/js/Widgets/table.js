@@ -1,7 +1,8 @@
-function Row(inpText, inpID) {
+function Row(inpText, inpID, inpStyle) {
     this.item_id = inpID;
     this.text = inpText;
     this.selected = false;
+    this.style = inpStyle;
 }
 
 Row.prototype = {
@@ -86,7 +87,7 @@ Table.prototype = {
         }
         else {
             
-            this.callback.RowSelected(this.rows[theDiv.id].text);
+            this.callback.RowSelected(this.rows[theDiv.id].item_id);
         }
         
         
@@ -96,6 +97,7 @@ Table.prototype = {
         this.appendingElement.innerHTML = "";
         var i;
         for (i = 0; i < this.rows.length; i++) {
+            
             //alert("Adding element: " + this.rows[i].text)
             var div = document.createElement("div");
             div.className = "row";

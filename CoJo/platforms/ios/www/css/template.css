@@ -19,7 +19,7 @@
     top: 64px;
     left: 0;
     width: 320px;
-    height: 455px;
+    height: 505px;
     overflow: hidden;
 }
 
@@ -32,13 +32,36 @@
     overflow: hidden;
 }
 
-.tabBar {
+.tabBarContainer {
     position: absolute;
-    top: 497px;
+    top: 432px;
     left: 0;
     height: 73px;
     width: 320px;
+}
+
+.tabBar {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    height: 73px;
+    width: 320px;
     background-image: url('../img/tabBar.png');
+}
+
+.tabBarItem {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    top: 24px;
+    height: 49px;
+    width: 64px;
+}
+
+img.tabItem {
+    position: relative;
+    left: 17px;
+    top: 9px;
 }
 
 .rightNavBarItem {
@@ -82,4 +105,68 @@ p.navBarItem {
     font-family: Arial;
     font-size: 17px;
     color: white;
+}
+
+.pageBar {
+    position: relative;
+    float: left;
+    padding: 0;
+    margin: 0;
+    width: 320px;
+    height: 40px;
+    background-color: white;
+}
+
+.pageBarItem {
+    position: relative;
+    float: left;
+    padding: 0;
+    margin: 0;
+    width: 160px;
+    height: 40px;
+    border-bottom: solid thin;
+    border-bottom-color: #74D7ED;
+}
+
+.pageBarItemSelected {
+    position: relative;
+    float: left;
+    padding: 0;
+    margin: 0;
+    width: 160px;
+    height: 40px;
+    border-bottom: solid thin;
+    border-bottom-color: red;
+}
+
+.galleryContainer {
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:320px;
+    height:412px;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    -ms-overflow-x:hidden;
+    overflow-x:hidden;
+    background-image:none;
+    padding: 0;
+    margin: 0;
+}
+    
+.thumbnailDiv {
+    position: relative;
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-left: 1px;
+    margin-top: 1px;
+    z-index: 0;
+}
+    
+.thumbnail {
+    width: 100px;
+    height: 100px;
+    margin-left: 1px;
+    margin-top: 1px;
 }

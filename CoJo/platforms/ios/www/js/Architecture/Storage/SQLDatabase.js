@@ -56,7 +56,6 @@ SQLDatabase.prototype = {
     },
     
     UpdateStateSuccess: function() {
-        //alert("TRANSACTION SUCCESS");
         this.callback.transactionComplete();
     },
     

@@ -1,7 +1,86 @@
+<!DOCTYPE html>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
 <html>
-    <script type="text/javascript">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         
-        alert(window.location);
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link rel="stylesheet" href="css/template.css" />
+        <link rel="stylesheet" href="css/table.css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/Widgets/table.js"></script>
+        <script src="js/Architecture/Storage/SQLDatabase.js"></script>
+        <script src="js/Architecture/Storage/StorageController.js"></script>
+        <script src="js/Architecture/Domain/Media.js"></script>
+        <script src="js/Architecture/Domain/DomainController.js"></script>
+        <script src="js/Architecture/Application/Generator/TableWidget.js"></script>
+        <script src="js/Architecture/Application/Generator/TabBar.js"></script>
+        <script src="js/Architecture/Application/Generator/Section.js"></script>
+        <script src="js/Architecture/Application/Generator/Content.js"></script>
+        <script src="js/Architecture/Application/Generator/Navigation.js"></script>
         
-    </script>
+        <script src="js/Architecture/Application/Summary/SummaryAppController.js"></script>
+        
+        
+        <script type="text/javascript">
+            app.initialize();
+            
+            var appController;
+            
+            function pageLoaded() {
+                
+                appController = new SummaryAppController();
+                
+            }
+        </script>
+    </head>
+    <body onload="pageLoaded()">
+        <div class="container" id="appContainer">
+            <!--<div class="topNavigationBar">
+             <div id="EditOptions" class="leftNavBarItem" style="display: none;" onclick="appController.deleteFromTable();">
+             
+             <p class="navBarItem">Delete</p>
+             
+             </div>
+             
+             <div class="navBarTitle"><p class="navTitle">My Stories</p></div>
+             
+             <div class="rightNavBarItem" onclick="appController.togglePageState();">
+             <p id="Edit" class="navBarItem">Edit</p>
+             <p id="Done" class="navBarItem" style="display: none;">Done</p>
+             </div>
+             
+             </div>
+             
+             <div class="contentBoxHome">
+             
+             <div id="table" class="tableContainer"></div>
+             
+             </div>-->
+            
+        </div>
+        
+    </body>
 </html>
