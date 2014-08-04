@@ -1,12 +1,10 @@
-function TabItem(inpId, inpSrc) {
+function TabItem(inpId) {
     this.id = inpId;
-    this.src = inpSrc;
 }
 
-function TabBarItem(inpImgSrc, inpId, inpPos, inpCallback) {
+function TabBarItem(inpId, inpPos, inpCallback) {
     this.callback = inpCallback;
-    alert("CREATING TABBARITEM");
-    this.imgSrc = inpImgSrc;
+    //alert("CREATING TABBARITEM");
     this.id = inpId;
     this.pos = 64*inpPos;
 }
@@ -19,12 +17,6 @@ TabBarItem.prototype = {
         var thePos = this.pos + "px";
         //alert("pos: " + thePos);
         aPosition.style.left = thePos;
-        
-        var img = document.createElement("img");
-        img.src = this.imgSrc;
-        img.className = "tabItem";
-        
-        aPosition.appendChild(img);
         
         //alert(aPosition.style.left);
         
@@ -42,17 +34,23 @@ function TabBar(inpA, inpB, inpC, inpD, inpCallback) {
     
     this.callback = inpCallback;
     
-    this.a = new TabBarItem(inpA.src, inpA.id, 0, this);
-    this.b = new TabBarItem(inpB.src, inpB.id, 1, this);
-    this.c = new TabBarItem(inpC.src, inpC.id, 3, this);
-    this.d = new TabBarItem(inpD.src, inpD.id, 4, this);
+    this.a = new TabBarItem(inpA.id, 0, this);
+    this.b = new TabBarItem(inpB.id, 1, this);
+    this.c = new TabBarItem(inpC.id, 3, this);
+    this.d = new TabBarItem(inpD.id, 4, this);
 }
 
 TabBar.prototype = {
     Render: function(appendDiv) {
         alert("RENDERING TAB BAR");
+        appendDiv.innerHTML = "";
         var tabBar = document.createElement("div");
         tabBar.className = "tabBar";
+        
+        var tabBarImage = document.createElement("img");
+        tabBarImage.src = this.callback.imgSrc;
+        
+        tabBar.appendChild(tabBarImage);
         
         this.a.Render(tabBar);
         this.b.Render(tabBar);
@@ -71,19 +69,55 @@ TabBar.prototype = {
 }
 
 function ViewTabBar(inpCallback) {
-    alert("CREATING VIEW TAB BAR");
+    //alert("CREATING VIEW TAB BAR");
+    
+    this.imgSrc = "img/tabBar.png";
     this.callback = inpCallback;
-    this.tabBar = new TabBar(new TabItem("notes", "img/Tab_Bar/notes.png"), new TabItem("associations", "img/Tab_Bar/associations.png"), new TabItem("media", "img/Tab_Bar/media.png"), new TabItem("share", "img/Tab_Bar/share.png"), this);
+    this.tabBar = new TabBar(new TabItem("notes"), new TabItem("associations"), new TabItem("media"), new TabItem("share"), this);
 }
 
 ViewTabBar.prototype = {
     Render: function(appendDiv) {
-        alert("RENDERING VIEW TAB BAR");
+        //alert("RENDERING VIEW TAB BAR");
         this.tabBar.Render(appendDiv);
     },
     
     tabItemSelected: function(data) {
-        alert("VIEW TAB BAR ITEM SELECTED");
+        //alert("VIEW TAB BAR ITEM SELECTED");
+        this.callback.tabItemSelected(data);
+    }
+}
+
+function BasicEditTabBar(inpCallback) {
+    this.imgSrc = "img/basicEdit.png";
+    this.callback = inpCallback;
+    this.tabBar = new TabBar(new TabItem(""), new TabItem(""), new TabItem(""), new TabItem("delete"), this);
+}
+
+BasicEditTabBar.prototype = {
+    Render: function(appendDiv) {
+        //alert("RENDERING VIEW TAB BAR");
+        this.tabBar.Render(appendDiv);
+    },
+    
+    tabItemSelected: function (data) {
+        this.callback.tabItemSelected(data);
+    }
+}
+
+function MapEditTabBar(inpCallback) {
+    this.imgSrc = "img/mapEdit.png";
+    this.callback = inpCallback;
+    this.tabBar = new TabBar(new TabItem(""), new TabItem(""), new TabItem(""), new TabItem("geolocate"), this);
+}
+
+MapEditTabBar.prototype = {
+    Render: function(appendDiv) {
+        //alert("RENDERING VIEW TAB BAR");
+        this.tabBar.Render(appendDiv);
+    },
+    
+    tabItemSelected: function (data) {
         this.callback.tabItemSelected(data);
     }
 }

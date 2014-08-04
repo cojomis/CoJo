@@ -7,8 +7,11 @@ function Section(inpData, inpCallback) {
         this.widget = new TableWidget(inpData.Data, this);
     } else if (this.data.Type == "Gallery") {
         this.widget = new GalleryWidget(inpData.Data, this, this.data.SubType);
+    } else if (this.data.Type == "Map") {
+        this.widget = new MapWidget(inpData.Data, this);
     }
     
+    this.tabMode = "";
     this.tabBar = new ViewTabBar(this);
     
     
@@ -16,32 +19,57 @@ function Section(inpData, inpCallback) {
 
 Section.prototype = {
     Render: function(appendDiv) {
-        alert("REND SECTION");
+        //alert("REND SECTION");
 
         var widgetContainer = document.createElement("div");
         widgetContainer.className = "widgetContainer";
         appendDiv.appendChild(widgetContainer);
         
-        if (this.data.canEdit == "True") {
+        if (this.data.TabBar.Edit.canEdit == "True") {
             this.callback.renderCanEdit();
         }
         
         this.widget.appendDiv = widgetContainer;
-        alert("WIDGET");
+        //alert("WIDGET");
         this.widget.Render();
         
-        alert("after");
+        //alert("after");
         
         var tabBarContainer = document.createElement("div");
         tabBarContainer.className = "tabBarContainer";
         appendDiv.appendChild(tabBarContainer);
-        this.tabBar.Render(tabBarContainer);
+        
+        if (this.data.TabBar.viewBar == "True") {
+            this.tabBar.Render(tabBarContainer);
+        }
         
     },
     
+    RetrievedLocation: function(position) {
+        alert("section location");
+        this.callback.RetrievedLocation(position);
+    },
+    
     EnableEdit: function() {
-        alert("SECITON EDIT");
+        alert("enable edit");
+        var tabBarCont = document.getElementsByClassName("tabBarContainer");
+        
+        if (this.data.TabBar.Edit.Type == "Basic") {
+            this.tabBar = new BasicEditTabBar(this);
+        } else if (this.data.TabBar.Edit.Type == "Map") {
+            this.tabBar = new MapEditTabBar(this);
+        }
+        
+        this.tabBar.Render(tabBarCont[0]);
         this.widget.EnableEdit();
+    },
+    
+    DoneEdit: function() {
+        // IS THIS NEEDED WITH PAGE RELOAD?
+    },
+    
+    AddItem: function() {
+        this.callback.AddItem();
     },
     
     AddPicture: function() {
@@ -57,7 +85,15 @@ Section.prototype = {
     },
     
     tabItemSelected: function(data) {
-        alert('SECTION TAB ITEM SELECTED');
-        this.callback.tabItemSelected(data);
+        if (data.id == "delete") {
+            this.widget.DeleteSelectedItems();
+        } else if (data.id == "geolocate") {
+            alert("get current position");
+            this.widget.GetCurrentLocation();
+        }
+        
+        else {
+            this.callback.tabItemSelected(data);
+        }
     }
 }

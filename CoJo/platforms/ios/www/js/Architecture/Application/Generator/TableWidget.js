@@ -5,6 +5,7 @@ function DataTableItem(inpData, inpDisplayProperty, inpCallback) {
     this.data = inpData;
     
     this.callback = inpCallback;
+    this.appendDiv = "";
     this.selected = 0;
     
 }
@@ -12,13 +13,31 @@ function DataTableItem(inpData, inpDisplayProperty, inpCallback) {
 DataTableItem.prototype = {
 
     Render: function(appendDiv) {
-        alert("Rendering row");
+        //alert("Rendering row");
         var rowDiv = document.createElement("div");
         rowDiv.className = "row";
         for (prop in this.data) {
             if (typeof(this.data[prop]) === "string") {
                 if (prop == this.displayProperty) {
-                    rowDiv.innerHTML = this.data[prop];
+                    var text = document.createElement("p");
+                    if (this.data[prop] == "Add") {
+                        text.className = "dataRowText";
+                        text.style.color = "#74D7ED";
+                        text.innerHTML = this.data[prop];
+                    } else {
+                        text.className = "dataRowText";
+                        text.innerHTML = this.data[prop];
+                        
+                        if (this.selected) {
+                            var selectedDiv = document.createElement("div");
+                            selectedDiv.className = "selected";
+                            
+                            rowDiv.appendChild(selectedDiv);
+                        }
+                        
+                    }
+                    
+                    rowDiv.appendChild(text);
                 }
             }
         }
@@ -33,12 +52,22 @@ DataTableItem.prototype = {
         if (this.data.constructor.name == "ManualDataRow") {
             //alert(this.data);
             if (this.data.data == "Add") {
-                alert("ADD ITEM");
+                //alert("ADD ITEM");
                 this.callback.AddItem();
             }
         } else {
             if (this.callback.state == 1) {
-                // ADD SELECTED ITEM
+                alert("ITEM SELECTED");
+                if (this.selected == 0) {
+                    this.selected = 1;
+                    this.callback.Render();
+                    
+                } else {
+                    this.selected = 0;
+                    this.callback.Render();
+                }
+                
+                this.Render();
             } else {
                 this.callback.RowSelected(this.data);
             }
@@ -52,7 +81,7 @@ function ManualDataRow(inpData) {
 }
 
 function InputTableItem(inpData, inpDisplayProperty, inpCallback) {
-    alert("CREATING INPUT TABLE ITEM");
+    //alert("CREATING INPUT TABLE ITEM");
     this.displayProperty = inpDisplayProperty;
     
     this.data = inpData;
@@ -63,7 +92,7 @@ function InputTableItem(inpData, inpDisplayProperty, inpCallback) {
 InputTableItem.prototype = {
 
     Render: function(appendDiv) {
-        alert("Rendering row");
+        //alert("Rendering row");
         var rowDiv = document.createElement("div");
         rowDiv.className = "row";
         for (prop in this.data) {
@@ -114,7 +143,7 @@ InputTableItem.prototype = {
 }
 
 function TableWidget(inpData, inpCallback) {
-    alert("TW CONST");
+    //alert("TW CONST");
     this.data = inpData;
 
     this.rows = new Array();
@@ -136,7 +165,7 @@ function TableWidget(inpData, inpCallback) {
     } else if (Object.prototype.toString.call(this.data.Data) == '[object Object]') {
         alert("is object");
         for (prop in this.data.Data) {
-            alert(typeof(this.data.Data[prop]));
+            //alert(typeof(this.data.Data[prop]));
             if (typeof(this.data.Data[prop]) == "string") {
                 var newItem = new InputTableItem(this.data.Data, prop, this);
                 this.rows.push(newItem);
@@ -175,12 +204,38 @@ TableWidget.prototype = {
         this.Render();
     },
     
+    DoneEdit: function() {
+        this.state = 0;
+        this.rows.splice(0,1);
+        this.Render();
+    },
+    
     AddItem: function() {
         this.callback.AddItem();
     },
     
     RowSelected: function(data) {
         this.callback.RowSelected(data);
+    },
+    
+    DeleteSelectedItems: function() {
+        alert("Delete selected items");
+        alert(this.data.Identifier);
+        
+        for (i = 0; i < this.rows.length; i++) {
+            if (this.rows[i].selected) {
+                alert("row selected");
+                for (x = 0; x < this.data.Data.length; x++) {
+                    alert("row: " + this.rows[i].data[this.data.Identifier] + " == " + this.data.Data[x][this.data.Identifier]);
+                    if (this.rows[i].data[this.data.Identifier] == this.data.Data[x][this.data.Identifier]) {
+                        this.data.Data.splice(x,1);
+                        x--;
+                    }
+                }
+            }
+        }
+        
+        this.Render();
     }
     
 }

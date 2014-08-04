@@ -45,4 +45,12 @@
     top: 12px;
     width: 20px;
     height: 20px;
+    background-image: url('../img/selected.png');
+}
+
+p.dataRowText {
+    margin-top: 14px;
+    margin-left: 20px;
+    font-family: Arial;
+    font-size: 13;
 }

@@ -46,7 +46,6 @@
     left: 0px;
     height: 73px;
     width: 320px;
-    background-image: url('../img/tabBar.png');
 }
 
 .tabBarItem {
@@ -126,6 +125,7 @@ p.navBarItem {
     height: 40px;
     border-bottom: solid thin;
     border-bottom-color: #74D7ED;
+    text-align: center;
 }
 
 .pageBarItemSelected {
@@ -136,13 +136,14 @@ p.navBarItem {
     width: 160px;
     height: 40px;
     border-bottom: solid thin;
-    border-bottom-color: red;
+    border-bottom-color: #ED2939;
+    text-align: center;
 }
 
 .galleryContainer {
     position:absolute;
     left:0px;
-    top:0px;
+    top:2px;
     width:320px;
     height:412px;
     overflow:auto;
@@ -153,20 +154,36 @@ p.navBarItem {
     padding: 0;
     margin: 0;
 }
+
+p.pageBarText {
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    font-family: Arial;
+    font-size: 17;
+    color: #999999;
+    display: inline-block;
+}
     
 .thumbnailDiv {
     position: relative;
     float: left;
-    width: 100px;
-    height: 100px;
+    width: 105px;
+    height: 105px;
     margin-left: 1px;
     margin-top: 1px;
     z-index: 0;
 }
     
 .thumbnail {
-    width: 100px;
-    height: 100px;
-    margin-left: 1px;
-    margin-top: 1px;
+    width: 105px;
+    height: 105px;
+}
+
+.thumbnailEditCover {
+    width: 105px;
+    height: 105px;
+    position: absolute;
+    left: 0;
+    top: 0;
 }

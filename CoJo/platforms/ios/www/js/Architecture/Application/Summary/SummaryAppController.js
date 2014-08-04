@@ -76,6 +76,8 @@ SummaryAppController.prototype = {
     tabItemSelected: function(data) {
         if (data.id == "media") {
             this.navigateToPage("media.html", this.newState.Story[0].STORY_ID);
+        } else if (data.id == "associations") {
+            this.navigateToPage("associations.html", this.newState.Story[0].STORY_ID);
         }
     }
     

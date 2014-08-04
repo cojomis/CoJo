@@ -6,7 +6,7 @@
 
 function SQLDatabase(inpCallback) {
     // Database configuration (Created if the database does not already exists)
-    this.database = window.openDatabase("CoJooooaaAFAFGfFFf", "1.0", "CojooooaaAFAFFFfFf", 200000, this.databaseReady.bind(this));
+    this.database = window.openDatabase("CoJooooaaAFAFGfFFfAAVbGF", "1.0", "CojooooaaAFAFFFfFfAAVbGF", 200000, this.databaseReady.bind(this));
     this.currentStatement = "";
     
     // When results are received (i.e. Select), the listener is called to inform them of the results
@@ -27,12 +27,12 @@ SQLDatabase.prototype = {
     },
     
     createDB: function(tx) {
-        tx.executeSql('CREATE TABLE STORY ("STORY_ID" INTEGER ,"Headline" VARCHAR ,"Story_Date" VARCHAR ,"Story_Time" VARCHAR ,"Latitude" VARCHAR ,"Longitude" VARCHAR ,PRIMARY KEY ( "STORY_ID" ))');
-        tx.executeSql('CREATE TABLE IMAGE ("ID" INTEGER ,"URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
-        tx.executeSql('CREATE TABLE VIDEO ("ID" INTEGER ,"URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
-        tx.executeSql('CREATE TABLE AUDIO ("ID" INTEGER, "URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ("ID"), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))')
-        tx.executeSql('CREATE TABLE NOTE ("ID" INTEGER ,"Text" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
-        tx.executeSql('INSERT INTO STORY(Headline) VALUES("App Story")');
+        tx.executeSql('CREATE TABLE STORY ("STORY_ID" INTEGER PRIMARY KEY AUTOINCREMENT,"Headline" VARCHAR ,"Story_Date" VARCHAR ,"Story_Time" VARCHAR ,"Latitude" VARCHAR ,"Longitude" VARCHAR)');
+        tx.executeSql('CREATE TABLE IMAGE ("ID" INTEGER AUTO_INCREMENT,"URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
+        tx.executeSql('CREATE TABLE VIDEO ("ID" INTEGER AUTO_INCREMENT,"URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
+        tx.executeSql('CREATE TABLE AUDIO ("ID" INTEGER AUTO_INCREMENT, "URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ("ID"), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))')
+        tx.executeSql('CREATE TABLE NOTE ("ID" INTEGER AUTO_INCREMENT,"Text" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
+        //tx.executeSql('INSERT INTO STORY(Headline) VALUES("App Story")');
     },
     
     errorTable: function(err) {

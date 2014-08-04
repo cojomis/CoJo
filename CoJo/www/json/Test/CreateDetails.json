@@ -4,10 +4,26 @@
         "Section": [
             {
                 "Name": "Details",
-                "canEdit": "True",
+                "TabBar": {
+                    "viewBar": "True",
+                    "Edit": {
+                        "canEdit": "False",
+                        "Type": ""
+                    }
+                },
                 "Type": "Table",
                 "Data": {
                     "Data": {}
+                }
+            },
+            {
+                "Name": "Notes",
+                "canEdit": "False",
+                "Type": "Note",
+                "Data": {
+                    "Data": {
+                        
+                    }
                 }
             }
      

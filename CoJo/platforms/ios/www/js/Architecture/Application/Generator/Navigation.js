@@ -9,7 +9,7 @@ function Navigation(inpData, inpCallback, appendDiv) {
 Navigation.prototype = {
     Render: function(appendDiv) {
         
-        alert("render nav");
+        //alert("render nav");
         var navigationBar = document.createElement("div");
         navigationBar.className = "topNavigationBar";
         navigationBar.id = "topNavigationBar";
@@ -30,7 +30,7 @@ Navigation.prototype = {
         
         this.content.appendDiv = contentBox;
         
-        alert("after appending");
+        //alert("after appending");
         
         this.content.Render();
     },
@@ -39,7 +39,12 @@ Navigation.prototype = {
         var navigationBar = document.getElementById("topNavigationBar");
         var editButton = document.createElement("div");
         editButton.className = "rightNavBarItem";
-        editButton.innerHTML = "Edit";
+        
+        var text = document.createElement("p");
+        text.className = "navBarItem";
+        text.innerHTML = "Edit";
+        
+        editButton.appendChild(text);
         
         editButton.addEventListener('click', this.editHandler.bind(this), false);
         
@@ -53,7 +58,17 @@ Navigation.prototype = {
         } else {
             element.target.innerHTML = "Edit";
             this.callback.UpdateState();
+            this.content.DoneEdit();
         }
+    },
+    
+    RetrievedLocation: function(position) {
+        alert("navigation location");
+        this.callback.RetrievedLocation(position);
+    },
+    
+    AddItem: function() {
+        this.callback.AddItem();  
     },
     
     AddPicture: function() {
@@ -69,7 +84,7 @@ Navigation.prototype = {
     },
     
     tabItemSelected: function(data) {
-        alert("NAVIGATION TAB ITEM SELECTED");
+        //alert("NAVIGATION TAB ITEM SELECTED");
         this.callback.tabItemSelected(data);
     }
 }

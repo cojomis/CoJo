@@ -4,7 +4,13 @@
         "Section": [
             {
                 "Name": "Stories",
-                "canEdit": "True",
+                "TabBar": {
+                    "viewBar": "False",
+                    "Edit": {
+                        "canEdit": "True",
+                        "Type": "Basic"
+                    }
+                },
                 "Type": "Table",
                 "Data": {
                     "Identifier": "STORY_ID",

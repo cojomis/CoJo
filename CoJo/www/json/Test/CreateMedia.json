@@ -4,7 +4,13 @@
         "Section": [
             {
                 "Name": "Image",
-                "canEdit": "True",
+                "TabBar": {
+                    "viewBar": "True",
+                    "Edit": {
+                        "canEdit": "True",
+                        "Type": "Basic"
+                    }
+                },
                 "Type": "Gallery",
                 "SubType": "Image",
                 "Data": {
@@ -17,7 +23,13 @@
             },
             {
                 "Name": "Video",
-                "canEdit": "True",
+                "TabBar": {
+                    "viewBar": "True",
+                    "Edit": {
+                        "canEdit": "True",
+                        "Type": "Basic"
+                    }
+                },
                 "Type": "Gallery",
                 "SubType": "Video",
                 "Data": {
@@ -30,7 +42,13 @@
             },
             {
                 "Name": "Audio",
-                "canEdit": "True",
+                "TabBar": {
+                    "viewBar": "True",
+                    "Edit": {
+                        "canEdit": "True",
+                        "Type": "Basic"
+                    }
+                },
                 "Type": "Table",
                 "Data": {
                     "Identifier": "ID",

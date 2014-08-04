@@ -48,11 +48,6 @@ MyStoriesAppController.prototype = {
         this.oldState = JSON.parse(JSON.stringify(res));
         this.newState = JSON.parse(JSON.stringify(res));
         
-        /*for(i = 0; i < res.Story.length; i++) {
-            alert(res.Story[i].Headline);
-            this.storiesTable.AddRow(res.Story[i].Headline, res.Story[i].STORY_ID);
-        }*/
-        
         $.getJSON("json/Test/CreatePage.json", this.gotPageCreation.bind(this));
     },
     
@@ -82,28 +77,6 @@ MyStoriesAppController.prototype = {
         this.newState.Story.push(newStory);
         
         this.UpdateState();
-    },
-    
-    tabItemSelected: function(data) {
-        if (data.id == "media") {
-            this.navigateToPage("media.html", this.newState.Story[0].STORY_ID);
-        }
     }
-    
-    /*deleteFromTable: function() {
-        this.storiesTable.DeleteSelectedItems();
-    },
-    
-    deleteFromState: function(inpID) {
-        alert("DELETING: " + inpID);
-        for (i = 0; i < this.newState.Story.length; i++) {
-            if (this.newState.Story[i].STORY_ID == inpID) {
-                this.newState.Story.splice(i,1);
-            }
-        }
-        
-        //this.UpdateState();
-        
-        //alert(JSON.stringify(this.newState));
-    }*/
+
 }

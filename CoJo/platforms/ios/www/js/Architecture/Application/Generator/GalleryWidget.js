@@ -1,5 +1,5 @@
 function ImageItem(inpData, inpDisplayProperty, inpCallback) {
-    alert("CREATING TABLE ITEM");
+    //alert("CREATING TABLE ITEM");
     this.displayProperty = inpDisplayProperty;
     
     this.data = inpData;
@@ -12,7 +12,7 @@ function ImageItem(inpData, inpDisplayProperty, inpCallback) {
 ImageItem.prototype = {
 
     Render: function(appendDiv) {
-        alert("Rendering element");
+        //alert("Rendering element");
         var rowDiv = document.createElement("div");
         rowDiv.className = "thumbnailDiv";
         for (prop in this.data) {
@@ -45,7 +45,11 @@ ImageItem.prototype = {
             
         } else {
             if (this.callback.state == 1) {
-                // ADD SELECTED ITEM
+                if (this.selected == 0) {
+                    this.selected = 1;
+                } else {
+                    this.selected = 0;
+                }
             } else {
                 this.callback.RowSelected(this.data);
             }
@@ -55,7 +59,7 @@ ImageItem.prototype = {
 }
 
 function VideoItem(inpData, inpDisplayProperty, inpCallback) {
-    alert("CREATING VIDEO ITEM");
+    //alert("CREATING VIDEO ITEM");
     this.displayProperty = inpDisplayProperty;
     
     this.data = inpData;
@@ -79,6 +83,7 @@ VideoItem.prototype = {
                     video.height = "100";
                     video.className = "thumbnail";
                     video.src = this.data[prop];
+                    video.preload = "auto";
                     rowDiv.appendChild(video);
                 }
             }
@@ -113,7 +118,7 @@ function ManualImageRow(inpData, inpType) {
 }
 
 function GalleryWidget(inpData, inpCallback, inpType) {
-    alert("GW CONST");
+    //alert("GW CONST");
     this.data = inpData;
 
     this.rows = new Array();
@@ -127,15 +132,15 @@ function GalleryWidget(inpData, inpCallback, inpType) {
     //alert("TYPE: " + Object.prototype.toString.call(this.data.Data));
     
     if (Object.prototype.toString.call(this.data.Data) == '[object Array]') {
-        alert("is array");
+        //alert("is array");
         for (i = 0; i < this.data.Data.length; i++) {
             var newItem = "";
             if (this.type == "Image") {
-                alert('Creating IMAGE gallery');
+                //alert('Creating IMAGE gallery');
                 newItem = new ImageItem(this.data.Data[i], this.data.Value, this);
 
             } else {
-                alert("Creating Video gallery");
+                //alert("Creating Video gallery");
                 newItem = new VideoItem(this.data.Data[i], this.data.Value, this);
             }
             
@@ -167,7 +172,7 @@ GalleryWidget.prototype = {
         alert("TABLE WIDGET IN EDIT MODE");
         this.state = 1;
         
-        var addRow = new ManualImageRow("img/selected.png", this.type);
+        var addRow = new ManualImageRow("img/add.png", this.type);
         
         var theRow = new ImageItem(addRow, "data", this);
         this.rows.splice(0,0,theRow);

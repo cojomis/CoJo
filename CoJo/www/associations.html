@@ -28,20 +28,21 @@
         <link rel="stylesheet" href="css/template.css" />
         <link rel="stylesheet" href="css/table.css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9CbOei784fsDEp6PuvWPFhqwW17D1C7A"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="js/Widgets/table.js"></script>
         <script src="js/Architecture/Storage/SQLDatabase.js"></script>
         <script src="js/Architecture/Storage/StorageController.js"></script>
-        <script src="js/Architecture/Storage/Media.js"></script>
+        <script src="js/Architecture/Domain/Media.js"></script>
         <script src="js/Architecture/Domain/DomainController.js"></script>
-        <script src="js/Architecture/Application/Generator/TableWidget.js"></script>
+        <script src="js/Architecture/Application/Generator/MapWidget.js"></script>
         <script src="js/Architecture/Application/Generator/TabBar.js"></script>
         <script src="js/Architecture/Application/Generator/Section.js"></script>
         <script src="js/Architecture/Application/Generator/Content.js"></script>
         <script src="js/Architecture/Application/Generator/Navigation.js"></script>
         
-        <script src="js/Architecture/Application/My_Stories/MyStoriesAppController.js"></script>
+        <script src="js/Architecture/Application/Associations/AssociationsAppController.js"></script>
         
         
         <script type="text/javascript">
@@ -50,37 +51,37 @@
             var appController;
             
             function pageLoaded() {
-
-                appController = new MyStoriesAppController();
-
+                
+                appController = new AssociationsAppController();
+                
             }
         </script>
     </head>
     <body onload="pageLoaded()">
-    <div class="container" id="appContainer">
+        <div class="container" id="appContainer">
             <!--<div class="topNavigationBar">
-                <div id="EditOptions" class="leftNavBarItem" style="display: none;" onclick="appController.deleteFromTable();">
-                
-                    <p class="navBarItem">Delete</p>
-                
-                </div>
-                
-                <div class="navBarTitle"><p class="navTitle">My Stories</p></div>
-                
-                <div class="rightNavBarItem" onclick="appController.togglePageState();">
-                    <p id="Edit" class="navBarItem9">Edit</p>
-                    <p id="Done" class="navBarItem" style="display: none;">Done</p>
-                </div>
+             <div id="EditOptions" class="leftNavBarItem" style="display: none;" onclick="appController.deleteFromTable();">
+             
+             <p class="navBarItem">Delete</p>
+             
+             </div>
+             
+             <div class="navBarTitle"><p class="navTitle">My Stories</p></div>
+             
+             <div class="rightNavBarItem" onclick="appController.togglePageState();">
+             <p id="Edit" class="navBarItem">Edit</p>
+             <p id="Done" class="navBarItem" style="display: none;">Done</p>
+             </div>
+             
+             </div>
+             
+             <div class="contentBoxHome">
+             
+             <div id="table" class="tableContainer"></div>
+             
+             </div>-->
             
-            </div>
-            
-            <div class="contentBoxHome">
-            
-                <div id="table" class="tableContainer"></div>
-            
-            </div>-->
-            
-    </div>
+        </div>
         
     </body>
 </html>

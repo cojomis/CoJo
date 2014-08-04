@@ -1,22 +1,21 @@
 {
     "Page": {
-        "Name": "My Stories",
+        "Name": "Associations",
         "Section": [
             {
-                "Name": "Stories",
+                "Name": "Map",
                 "TabBar": {
-                    "viewBar": "False",
+                    "viewBar": "True",
                     "Edit": {
                         "canEdit": "True",
-                        "Type": "Basic"
+                        "Type": "Map"
                     }
                 },
-                "Type": "Table",
+                "Type": "Map",
                 "Data": {
                     "Identifier": "STORY_ID",
-                    "Value": "Headline",
                     "Data": [
-
+                        
                     ]
                 }
             }

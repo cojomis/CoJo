@@ -4,10 +4,10 @@ function Content(inpData, inpCallback) {
     this.sections = new Array();
     this.appendDiv;
     
-    alert("LENGTH: " + this.data.length);
+    //alert("LENGTH: " + this.data.length);
 
     for(var i = 0; i < this.data.length; i++) {
-        alert("Creating section");
+        //alert("Creating section");
         var newSection = new Section(this.data[i], this);
         this.sections.push(newSection);
     }
@@ -18,7 +18,7 @@ function Content(inpData, inpCallback) {
 
 Content.prototype = {
     Render: function() {
-            alert("DIV: " + this.appendDiv);
+            //alert("DIV: " + this.appendDiv);
             this.appendDiv.innerHTML = "";
             
             if (this.sections.length > 1) {
@@ -36,7 +36,13 @@ Content.prototype = {
                     newSection.id = i;
                     newSection.addEventListener("click", this.eventHandler.bind(this), false);
                     newSection.style.width = 320/this.data.length + "px";
-                    newSection.innerHTML = this.data[i].Name;
+                    
+                    var text = document.createElement("p");
+                    text.className = "pageBarText";
+                    text.innerHTML = this.data[i].Name;
+                    
+                    newSection.appendChild(text)
+                    
                     pageBarContainer.appendChild(newSection);
                 }
             
@@ -49,10 +55,15 @@ Content.prototype = {
     },
     
     eventHandler: function(element) {
-        alert(element.target.id);
-        this.currentSection = element.target.id;
+        alert(element.target.parentNode.id);
+        this.currentSection = element.target.parentNode.id;
         this.Render();
         
+    },
+    
+    RetrievedLocation: function(position) {
+        alert("content loction");
+        this.callback.RetrievedLocation(position);
     },
     
     renderCanEdit: function() {
@@ -60,8 +71,16 @@ Content.prototype = {
     },
     
     EnableEdit: function() {
-        alert("CONTENT EDIT");
+        //alert("CONTENT EDIT");
         this.sections[this.currentSection].EnableEdit();
+    },
+    
+    DoneEdit: function() {
+        this.sections[this.currentSection].DoneEdit();
+    },
+    
+    AddItem: function() {
+        this.callback.AddItem();  
     },
     
     AddPicture: function() {
@@ -77,7 +96,7 @@ Content.prototype = {
     },
     
     tabItemSelected: function(data) {
-        alert("CONTENT TAB ITEM SELECTED");
+        //alert("CONTENT TAB ITEM SELECTED");
         this.callback.tabItemSelected(data);
     }
 }
