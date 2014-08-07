@@ -8,8 +8,13 @@ function NewVideo(inpURI) {
     this.URI = inpURI;
 }
 
+function NewAudio(inpURI) {
+    this.ID = "NEW";
+    this.URI = inpURI;
+}
+
 function MediaAppController() {
-    alert("In constructor");
+    //alert("In constructor");
     this.dController = new DomainController(this);
     //this.storiesTable = new Table("table", this);
 
@@ -28,24 +33,25 @@ function MediaAppController() {
 MediaAppController.prototype = {
     
     gotPageCreation: function(json) {
-        alert("GOT PAGE");
-        alert(json.Page.Section[0].Name);
+        //alert("GOT PAGE");
+        //alert(json.Page.Section[0].Name);
         json.Page.Section[0].Data.Data = this.newState.Story[0].Image;
         json.Page.Section[1].Data.Data = this.newState.Story[0].Video;
+        json.Page.Section[2].Data.Data = this.newState.Story[0].Audio;
         this.navigation = new Navigation(json, this);
         this.navigation.Render(document.getElementById("appContainer"));
     },
     
     prepare: function() {
-        alert("Getting JSON");
+        //alert("Getting JSON");
         $.getJSON("json/Media/prepare.json", this.gotJSON.bind(this));
     },
     
     gotJSON: function(json) {
-        alert(JSON.stringify(json));
+        //alert(JSON.stringify(json));
         
         var loc = window.location.toString();
-        alert("LOCATION: " + loc);
+        //alert("LOCATION: " + loc);
         var storyID = loc.substr(loc.length-1, 1);
         json.Story[0].STORY_ID = storyID;
         
@@ -84,6 +90,9 @@ MediaAppController.prototype = {
         this.dController.captureVideo(this.newState.Story[0].STORY_ID);
     },
     
+    AddAudio: function() {
+        this.dController.captureAudio(this.newState.Story[0].STORY_ID);
+    },
     
     retrievedImage: function(URI) {
         var nImg = new NewImage(URI);
@@ -97,22 +106,25 @@ MediaAppController.prototype = {
         this.newState.Story[0].Video.push(nImg);
         
         this.UpdateState();
-    }
-    
-    /*deleteFromTable: function() {
-        this.storiesTable.DeleteSelectedItems();
     },
     
-    deleteFromState: function(inpID) {
-        alert("DELETING: " + inpID);
-        for (i = 0; i < this.newState.Story.length; i++) {
-            if (this.newState.Story[i].STORY_ID == inpID) {
-                this.newState.Story.splice(i,1);
-            }
+    retrievedAudio: function(URI) {
+        var nAud = new NewAudio(URI);
+        this.newState.Story[0].Audio.push(nAud);
+        
+        this.UpdateState();
+    },
+    
+    navigateToPage: function(page, storyID) {
+        //alert("Go to page: " + page + " with ID " + storyID);
+        var url = page + "?id=" + storyID;
+        window.location = url;
+    },
+    
+    tabItemSelected: function(data) {
+        if (data.id == "summary" || data.id == "associations" || data.id == "index") {
+            this.navigateToPage(data.id + ".html", this.newState.Story[0].STORY_ID);
         }
-        
-        //this.UpdateState();
-        
-        //alert(JSON.stringify(this.newState));
-    }*/
+    }
+
 }

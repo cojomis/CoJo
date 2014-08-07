@@ -1,5 +1,5 @@
 function SummaryAppController() {
-    alert("In constructor");
+    //alert("In constructor");
     this.dController = new DomainController(this);
     //this.storiesTable = new Table("table", this);
 
@@ -9,6 +9,8 @@ function SummaryAppController() {
     this.newState = "";
     
     //this.pageState = 0;
+    this.next = "";
+    
     
     this.prepare();
     
@@ -18,23 +20,24 @@ function SummaryAppController() {
 SummaryAppController.prototype = {
     
     gotPageCreation: function(json) {
-        alert("GOT PAGE");
-        alert(json.Page.Section[0].Name);
+        //alert("GOT PAGE");
+        //alert(json.Page.Section[0].Name);
         json.Page.Section[0].Data.Data = this.newState.Story[0];
+        json.Page.Section[1].Data.Data = this.newState.Story[0].Note;
         this.navigation = new Navigation(json, this);
         this.navigation.Render(document.getElementById("appContainer"));
     },
     
     prepare: function() {
-        alert("Getting JSON");
+        //alert("Getting JSON");
         $.getJSON("json/Summary/prepare.json", this.gotJSON.bind(this));
     },
     
     gotJSON: function(json) {
-        alert(JSON.stringify(json));
+        //alert(JSON.stringify(json));
         
         var loc = window.location.toString();
-        alert("LOCATION: " + loc);
+        //alert("LOCATION: " + loc);
         var storyID = loc.substr(loc.length-1, 1);
         json.Story[0].STORY_ID = storyID;
         
@@ -42,7 +45,7 @@ SummaryAppController.prototype = {
     },
     
     navigateToPage: function(page, storyID) {
-        alert("Go to page: " + page + " with ID " + storyID);
+        //alert("Go to page: " + page + " with ID " + storyID);
         var url = page + "?id=" + storyID;
         window.location = url;
     },
@@ -64,37 +67,21 @@ SummaryAppController.prototype = {
     },
     
     UpdateComplete: function() {
-        window.location.reload();
+        if (this.next.id == "associations" || this.next.id == "media" || this.next.id == "index") {
+            this.navigateToPage(this.next.id + ".html", this.newState.Story[0].STORY_ID);
+        }
     },
     
     RowSelected: function(data) {
         //this.UpdateState();
         
-        window.location = "media.html?id=" + this.newState.Story[0].STORY_ID;
+        //window.location = "media.html?id=" + this.newState.Story[0].STORY_ID;
     },
     
     tabItemSelected: function(data) {
-        if (data.id == "media") {
-            this.navigateToPage("media.html", this.newState.Story[0].STORY_ID);
-        } else if (data.id == "associations") {
-            this.navigateToPage("associations.html", this.newState.Story[0].STORY_ID);
-        }
+        //alert(this.newState.Story[0].Note.length);
+        this.next = data;
+        this.UpdateState();
     }
     
-    /*deleteFromTable: function() {
-        this.storiesTable.DeleteSelectedItems();
-    },
-    
-    deleteFromState: function(inpID) {
-        alert("DELETING: " + inpID);
-        for (i = 0; i < this.newState.Story.length; i++) {
-            if (this.newState.Story[i].STORY_ID == inpID) {
-                this.newState.Story.splice(i,1);
-            }
-        }
-        
-        //this.UpdateState();
-        
-        //alert(JSON.stringify(this.newState));
-    }*/
 }

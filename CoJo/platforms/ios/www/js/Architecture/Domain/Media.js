@@ -5,7 +5,7 @@ function MediaController(inpCallback) {
 MediaController.prototype = {
     
     captureImage: function() {
-        alert("Capturing");
+        //alert("Capturing");
         navigator.device.capture.captureImage(this.captureImageSuccess.bind(this), this.captureFailure);
     },
     
@@ -14,12 +14,12 @@ MediaController.prototype = {
     },
     
     captureVideo: function() {
-        alert("in navigator video");
+        //alert("in navigator video");
         navigator.device.capture.captureVideo(this.captureVideoSuccess.bind(this), this.captureFailure);
     },
     
     captureImageSuccess: function(mediaFiles) {
-        alert("Success");
+        //alert("Success");
         this.callback.retrievedImage(mediaFiles[0].fullPath);
     },
     

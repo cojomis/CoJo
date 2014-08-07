@@ -8,7 +8,7 @@ function Navigation(inpData, inpCallback, appendDiv) {
 
 Navigation.prototype = {
     Render: function(appendDiv) {
-        
+        appendDiv.innerHTML = "";
         //alert("render nav");
         var navigationBar = document.createElement("div");
         navigationBar.className = "topNavigationBar";
@@ -36,6 +36,11 @@ Navigation.prototype = {
     },
     
     renderCanEdit: function() {
+        var remEdit = document.getElementsByClassName("rightNavBarItem");
+        if (remEdit.length > 0) {
+            remEdit[0].parentNode.removeChild(remEdit[0]);
+        }
+        
         var navigationBar = document.getElementById("topNavigationBar");
         var editButton = document.createElement("div");
         editButton.className = "rightNavBarItem";
@@ -63,7 +68,7 @@ Navigation.prototype = {
     },
     
     RetrievedLocation: function(position) {
-        alert("navigation location");
+        //alert("navigation location");
         this.callback.RetrievedLocation(position);
     },
     
@@ -77,6 +82,10 @@ Navigation.prototype = {
     
     AddVideo: function() {
         this.callback.AddVideo();
+    },
+    
+    AddAudio: function() {
+        this.callback.AddAudio();
     },
 
     RowSelected: function(data) {

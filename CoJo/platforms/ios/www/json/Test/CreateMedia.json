@@ -49,7 +49,8 @@
                         "Type": "Basic"
                     }
                 },
-                "Type": "Table",
+                "Type": "Gallery",
+                "SubType": "Audio",
                 "Data": {
                     "Identifier": "ID",
                     "Value": "URI",

@@ -66,8 +66,8 @@ SQLStorageController.prototype = {
             }
         }
         
-        alert("SELECT COMPLETE");
-        alert(JSON.stringify(this.returnArray));
+        //alert("SELECT COMPLETE");
+        //alert(JSON.stringify(this.returnArray));
         this.callback.readCallback(this.returnArray);
     },
     
@@ -126,7 +126,7 @@ SQLStorageController.prototype = {
             }
 
             if (execute) {
-                alert(statement);
+                //alert(statement);
             
                 this.database.Read(statement);
             
@@ -191,7 +191,7 @@ SQLStorageController.prototype = {
         this.RecurseDeleted(this.oldState[0], this.newState[0], 0);
         
         this.database.UpdateState(this.statements);
-        alert("DONE");
+        //alert("DONE");
                 
     },
     
@@ -214,7 +214,7 @@ SQLStorageController.prototype = {
                 // Find and recurse through any subtables (Image, Video, etc)
                 for (x = 0; x < newArray[i].length; x++) {
                     if (newArray[i][x] instanceof Array) {
-                        alert("CHECKING SUB TABLES");
+                        //alert("CHECKING SUB TABLES");
                         this.RecurseNew(newArray[i][x], oldArray[i][x], sID);
                     }
                 }
@@ -270,7 +270,7 @@ SQLStorageController.prototype = {
 
                     }
                     
-                    alert(statement);
+                    //alert(statement);
                 
                     this.statements.push(statement);
                     //this.database.Update(statement);
@@ -317,7 +317,7 @@ SQLStorageController.prototype = {
                 statement = "INSERT INTO " + arr[0] + " (" + cols + ") VALUES (" + vals + ")";
             }
             
-            alert(statement);
+            //alert(statement);
             this.statements.push(statement);
             //this.database.Create(statement);
         } else {
@@ -345,7 +345,7 @@ SQLStorageController.prototype = {
             }
             
             
-            alert(statement);
+            //alert(statement);
             
             this.statements.push(statement);
             //this.database.Delete(statement);

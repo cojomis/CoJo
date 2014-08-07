@@ -17,10 +17,10 @@ DomainController.prototype = {
     
     // Retrieves information from the database. It takes a Javascript object created from a JSON file, detailing what should be retrieved
     Read: function(inp) {
-        alert("READ");
+        //alert("READ");
         this.StorageC.Read(inp);
         
-        alert("Done");
+        //alert("Done");
     },
     
     UpdateComplete: function() {
@@ -34,7 +34,7 @@ DomainController.prototype = {
     },
     
     captureImage: function(storyID) {
-        alert("IN DCONTROLLER");
+        //alert("IN DCONTROLLER");
         this.story = storyID;
         this.MediaBrowser.captureImage();
     },
@@ -61,7 +61,8 @@ DomainController.prototype = {
     },
     
     retrievedAudio: function(inpURI) {
-        alert("RETRIEVED AUDIO");
+        this.URI = inpURI;
+        this.callback.retrievedAudio(inpURI);
         // PASS TO APPLICATION LAYER
     },
     

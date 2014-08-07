@@ -30,19 +30,20 @@ TabBarItem.prototype = {
     }
 }
 
-function TabBar(inpA, inpB, inpC, inpD, inpCallback) {
+function TabBar(inpA, inpB, inpC, inpD, inpE, inpCallback) {
     
     this.callback = inpCallback;
     
     this.a = new TabBarItem(inpA.id, 0, this);
     this.b = new TabBarItem(inpB.id, 1, this);
-    this.c = new TabBarItem(inpC.id, 3, this);
-    this.d = new TabBarItem(inpD.id, 4, this);
+    this.c = new TabBarItem(inpC.id, 2, this);
+    this.d = new TabBarItem(inpD.id, 3, this);
+    this.e = new TabBarItem(inpE.id, 4, this);
 }
 
 TabBar.prototype = {
     Render: function(appendDiv) {
-        alert("RENDERING TAB BAR");
+        //alert("RENDERING TAB BAR");
         appendDiv.innerHTML = "";
         var tabBar = document.createElement("div");
         tabBar.className = "tabBar";
@@ -56,6 +57,7 @@ TabBar.prototype = {
         this.b.Render(tabBar);
         this.c.Render(tabBar);
         this.d.Render(tabBar);
+        this.e.Render(tabBar);
         
         appendDiv.appendChild(tabBar);
         
@@ -63,7 +65,7 @@ TabBar.prototype = {
     },
     
     tabItemSelected: function(data) {
-        alert("TAB BAR ITEM SELECTED");
+        //alert("TAB BAR ITEM SELECTED");
         this.callback.tabItemSelected(data);
     }
 }
@@ -73,7 +75,7 @@ function ViewTabBar(inpCallback) {
     
     this.imgSrc = "img/tabBar.png";
     this.callback = inpCallback;
-    this.tabBar = new TabBar(new TabItem("notes"), new TabItem("associations"), new TabItem("media"), new TabItem("share"), this);
+    this.tabBar = new TabBar(new TabItem("summary"), new TabItem("associations"), new TabItem("index"), new TabItem("media"), new TabItem("share"), this);
 }
 
 ViewTabBar.prototype = {
@@ -91,7 +93,7 @@ ViewTabBar.prototype = {
 function BasicEditTabBar(inpCallback) {
     this.imgSrc = "img/basicEdit.png";
     this.callback = inpCallback;
-    this.tabBar = new TabBar(new TabItem(""), new TabItem(""), new TabItem(""), new TabItem("delete"), this);
+    this.tabBar = new TabBar(new TabItem(""), new TabItem(""), new TabItem(""), new TabItem(""), new TabItem("delete"), this);
 }
 
 BasicEditTabBar.prototype = {
@@ -108,7 +110,7 @@ BasicEditTabBar.prototype = {
 function MapEditTabBar(inpCallback) {
     this.imgSrc = "img/mapEdit.png";
     this.callback = inpCallback;
-    this.tabBar = new TabBar(new TabItem(""), new TabItem(""), new TabItem(""), new TabItem("geolocate"), this);
+    this.tabBar = new TabBar(new TabItem(""), new TabItem(""), new TabItem(""), new TabItem(""), new TabItem("geolocate"), this);
 }
 
 MapEditTabBar.prototype = {

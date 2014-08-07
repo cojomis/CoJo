@@ -4,11 +4,13 @@ function Section(inpData, inpCallback) {
     this.widget = "";
     
     if (this.data.Type == "Table") {
-        this.widget = new TableWidget(inpData.Data, this);
+        this.widget = new TableWidget(inpData.Data, this, this.data.SubType);
     } else if (this.data.Type == "Gallery") {
         this.widget = new GalleryWidget(inpData.Data, this, this.data.SubType);
     } else if (this.data.Type == "Map") {
         this.widget = new MapWidget(inpData.Data, this);
+    } else if (this.data.Type == "Note") {
+        this.widget = new NoteWidget(inpData.Data, this);
     }
     
     this.tabMode = "";
@@ -46,12 +48,12 @@ Section.prototype = {
     },
     
     RetrievedLocation: function(position) {
-        alert("section location");
+        //alert("section location");
         this.callback.RetrievedLocation(position);
     },
     
     EnableEdit: function() {
-        alert("enable edit");
+        //alert("enable edit");
         var tabBarCont = document.getElementsByClassName("tabBarContainer");
         
         if (this.data.TabBar.Edit.Type == "Basic") {
@@ -80,6 +82,10 @@ Section.prototype = {
         this.callback.AddVideo();
     },
     
+    AddAudio: function() {
+        this.callback.AddAudio();
+    },
+    
     RowSelected: function(data) {
         this.callback.RowSelected(data);
     },
@@ -88,7 +94,7 @@ Section.prototype = {
         if (data.id == "delete") {
             this.widget.DeleteSelectedItems();
         } else if (data.id == "geolocate") {
-            alert("get current position");
+            //alert("get current position");
             this.widget.GetCurrentLocation();
         }
         

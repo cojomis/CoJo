@@ -5,6 +5,10 @@
     overflow: hidden;
 }
 
+* {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
 .topNavigationBar {
     position: absolute;
     height: 64px;
@@ -172,10 +176,10 @@ p.pageBarText {
     height: 105px;
     margin-left: 1px;
     margin-top: 1px;
-    z-index: 0;
 }
     
 .thumbnail {
+    position: relative;
     width: 105px;
     height: 105px;
 }
@@ -186,4 +190,70 @@ p.pageBarText {
     position: absolute;
     left: 0;
     top: 0;
+}
+
+.thumbnailEditCoverVideo {
+    width: 105px;
+    height: 105px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: black;
+}
+
+*:focus {
+    outline: 0;
+}
+
+.thumbnailSelected {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 75px;
+    top: 75px;
+    background-image: url('../img/selected.png');
+}
+
+.inputLabel {
+    position: absolute;
+    left: 20px;
+    height: 14px;
+    width: 60px;
+}
+
+p.textInputLabel {
+    font-family: Arial;
+    color: #999999;
+    font-size: 13px;
+}
+
+.inputBox {
+    position: absolute;
+    left: 90px;
+    top: 6px;
+    width: 210px;
+    height: 25px;
+    border: none;
+    font-family: Arial;
+    font-size: 13;
+}
+
+.audioPlayerItem {
+    position: relative;
+    float: left;
+    top: 7px;
+    margin-left: 20px;
+    height: 30px;
+    width:30px;
+}
+
+.audioPosition {
+    position: relative;
+    left: 27px;
+    top: 27px;
+}
+
+.textArea {
+    border: none;
+    margin-left: 1px;
 }

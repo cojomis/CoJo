@@ -55,14 +55,14 @@ Content.prototype = {
     },
     
     eventHandler: function(element) {
-        alert(element.target.parentNode.id);
+        //alert(element.target.parentNode.id);
         this.currentSection = element.target.parentNode.id;
         this.Render();
         
     },
     
     RetrievedLocation: function(position) {
-        alert("content loction");
+        //alert("content loction");
         this.callback.RetrievedLocation(position);
     },
     
@@ -89,6 +89,10 @@ Content.prototype = {
     
     AddVideo: function() {
         this.callback.AddVideo();
+    },
+    
+    AddAudio: function() {
+        this.callback.AddAudio();
     },
     
     RowSelected: function(data) {

@@ -6,7 +6,7 @@
 
 function SQLDatabase(inpCallback) {
     // Database configuration (Created if the database does not already exists)
-    this.database = window.openDatabase("CoJooooaaAFAFGfFFfAAVbGF", "1.0", "CojooooaaAFAFFFfFfAAVbGF", 200000, this.databaseReady.bind(this));
+    this.database = window.openDatabase("CoJooooaaAFAFGfFFfAAVbGFAA", "1.0", "CojooooaaAFAFFFfFfAAVbGFAA", 200000, this.databaseReady.bind(this));
     this.currentStatement = "";
     
     // When results are received (i.e. Select), the listener is called to inform them of the results
@@ -18,7 +18,7 @@ function SQLDatabase(inpCallback) {
 SQLDatabase.prototype = {
     // If the database has to be created for the first time, this method is called which will instruct the database to create the relevant tables
     databaseReady: function(db) {
-        alert("Database Ready");
+        //alert("Database Ready");
         this.database.transaction(this.createDB, this.errorTable, this.successTable);   
     },
     
@@ -28,10 +28,10 @@ SQLDatabase.prototype = {
     
     createDB: function(tx) {
         tx.executeSql('CREATE TABLE STORY ("STORY_ID" INTEGER PRIMARY KEY AUTOINCREMENT,"Headline" VARCHAR ,"Story_Date" VARCHAR ,"Story_Time" VARCHAR ,"Latitude" VARCHAR ,"Longitude" VARCHAR)');
-        tx.executeSql('CREATE TABLE IMAGE ("ID" INTEGER AUTO_INCREMENT,"URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
-        tx.executeSql('CREATE TABLE VIDEO ("ID" INTEGER AUTO_INCREMENT,"URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
-        tx.executeSql('CREATE TABLE AUDIO ("ID" INTEGER AUTO_INCREMENT, "URI" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ("ID"), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))')
-        tx.executeSql('CREATE TABLE NOTE ("ID" INTEGER AUTO_INCREMENT,"Text" VARCHAR ,"STORY_ID" INTEGER ,PRIMARY KEY ( "ID" ), FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
+        tx.executeSql('CREATE TABLE IMAGE ("ID" INTEGER PRIMARY KEY AUTOINCREMENT,"URI" VARCHAR ,"STORY_ID" INTEGER, FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
+        tx.executeSql('CREATE TABLE VIDEO ("ID" INTEGER PRIMARY KEY AUTOINCREMENT,"URI" VARCHAR ,"STORY_ID" INTEGER, FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
+        tx.executeSql('CREATE TABLE AUDIO ("ID" INTEGER PRIMARY KEY AUTOINCREMENT, "URI" VARCHAR ,"STORY_ID" INTEGER, FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))')
+        tx.executeSql('CREATE TABLE NOTE ("ID" INTEGER PRIMARY KEY AUTOINCREMENT,"Text" VARCHAR ,"STORY_ID" INTEGER, FOREIGN KEY (STORY_ID) REFERENCES STORY(STORY_ID))');
         //tx.executeSql('INSERT INTO STORY(Headline) VALUES("App Story")');
     },
     
@@ -41,7 +41,7 @@ SQLDatabase.prototype = {
     },
     
     successTable: function(tx, res) {
-        alert("SUCCESS TABLE");
+        //alert("SUCCESS TABLE");
     },
     
     UpdateState: function(inpStatements) {

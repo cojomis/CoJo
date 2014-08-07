@@ -18,12 +18,18 @@
             },
             {
                 "Name": "Notes",
-                "canEdit": "False",
+                "TabBar": {
+                    "viewBar": "True",
+                    "Edit": {
+                        "canEdit": "False",
+                        "Type": ""
+                    }
+                },
                 "Type": "Note",
                 "Data": {
-                    "Data": {
-                        
-                    }
+                    "Identifer": "ID",
+                    "Value": "Text",
+                    "Data": []
                 }
             }
      

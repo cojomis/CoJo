@@ -7,8 +7,9 @@ function Story(inpHeadline) {
     this.Story_time = d.toTimeString();
 }
 
+
 function MyStoriesAppController() {
-    alert("In constructor");
+    //alert("In constructor");
     this.dController = new DomainController(this);
     //this.storiesTable = new Table("table", this);
 
@@ -27,20 +28,20 @@ function MyStoriesAppController() {
 MyStoriesAppController.prototype = {
     
     gotPageCreation: function(json) {
-        alert("GOT PAGE");
-        alert(json.Page.Section[0].Name);
+        //alert("GOT PAGE");
+        //alert(json.Page.Section[0].Name);
         json.Page.Section[0].Data.Data = this.newState.Story;
         this.navigation = new Navigation(json, this);
         this.navigation.Render(document.getElementById("appContainer"));
     },
     
     prepare: function() {
-        alert("Getting JSON");
+        //alert("Getting JSON");
         $.getJSON("json/My_Stories/prepare.json", this.gotJSON.bind(this));
     },
     
     gotJSON: function(json) {
-        alert(JSON.stringify(json));
+        //alert(JSON.stringify(json));
         this.dController.Read(json);
     },
     
@@ -52,7 +53,7 @@ MyStoriesAppController.prototype = {
     },
     
     navigateToPage: function(page, storyID) {
-        alert("Go to page: " + page + " with ID " + storyID);
+        //alert("Go to page: " + page + " with ID " + storyID);
         var url = page + "?id=" + storyID;
         window.location = url;
     },
@@ -66,7 +67,7 @@ MyStoriesAppController.prototype = {
     },
     
     RowSelected: function(data) {
-        alert("ROW SELECTED WITH STORY ID: " + data.STORY_ID);
+        //alert("ROW SELECTED WITH STORY ID: " + data.STORY_ID);
         var url = "summary.html?id=" + data.STORY_ID;
         window.location = url;
     },
@@ -74,8 +75,9 @@ MyStoriesAppController.prototype = {
     
     AddItem: function() {
         var newStory = new Story("NEW STORY");
-        this.newState.Story.push(newStory);
         
+        this.newState.Story.push(newStory);
+               
         this.UpdateState();
     }
 

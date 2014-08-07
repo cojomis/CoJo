@@ -44,7 +44,7 @@ MapWidget.prototype = {
     },
     
     locationRetrieved: function(position) {
-        alert("Location retrieved");
+        //alert("Location retrieved");
         var initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         
         var infoWindow = new google.maps.InfoWindow({
