@@ -1,10 +1,10 @@
+// Records information about the specific item on the Tab Bar. This is currently just an ID which is the purpose of the item (i.e. to navigate to a page, delete an item, etc)
 function TabItem(inpId) {
     this.id = inpId;
 }
 
 function TabBarItem(inpId, inpPos, inpCallback) {
     this.callback = inpCallback;
-    //alert("CREATING TABBARITEM");
     this.id = inpId;
     this.pos = 64*inpPos;
 }
@@ -15,12 +15,7 @@ TabBarItem.prototype = {
         aPosition.addEventListener('click', this.itemSelected.bind(this), false);
         aPosition.className = "tabBarItem";
         var thePos = this.pos + "px";
-        //alert("pos: " + thePos);
         aPosition.style.left = thePos;
-        
-        //alert(aPosition.style.left);
-        
-        //aPosition.style.backgroundColor = "red";
         
         appendDiv.appendChild(aPosition);
     },
@@ -43,7 +38,7 @@ function TabBar(inpA, inpB, inpC, inpD, inpE, inpCallback) {
 
 TabBar.prototype = {
     Render: function(appendDiv) {
-        //alert("RENDERING TAB BAR");
+
         appendDiv.innerHTML = "";
         var tabBar = document.createElement("div");
         tabBar.className = "tabBar";
@@ -65,13 +60,11 @@ TabBar.prototype = {
     },
     
     tabItemSelected: function(data) {
-        //alert("TAB BAR ITEM SELECTED");
         this.callback.tabItemSelected(data);
     }
 }
 
 function ViewTabBar(inpCallback) {
-    //alert("CREATING VIEW TAB BAR");
     
     this.imgSrc = "img/tabBar.png";
     this.callback = inpCallback;
@@ -80,12 +73,10 @@ function ViewTabBar(inpCallback) {
 
 ViewTabBar.prototype = {
     Render: function(appendDiv) {
-        //alert("RENDERING VIEW TAB BAR");
         this.tabBar.Render(appendDiv);
     },
     
     tabItemSelected: function(data) {
-        //alert("VIEW TAB BAR ITEM SELECTED");
         this.callback.tabItemSelected(data);
     }
 }
@@ -98,7 +89,6 @@ function BasicEditTabBar(inpCallback) {
 
 BasicEditTabBar.prototype = {
     Render: function(appendDiv) {
-        //alert("RENDERING VIEW TAB BAR");
         this.tabBar.Render(appendDiv);
     },
     
@@ -115,7 +105,6 @@ function MapEditTabBar(inpCallback) {
 
 MapEditTabBar.prototype = {
     Render: function(appendDiv) {
-        //alert("RENDERING VIEW TAB BAR");
         this.tabBar.Render(appendDiv);
     },
     

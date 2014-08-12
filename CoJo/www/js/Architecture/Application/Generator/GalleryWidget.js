@@ -1,5 +1,6 @@
+// A Gallery is made up of Items of a specific type. This class specifies an ImageItem used for displaying still images. It takes the array of data surrounding the Image and the name of a property that contains
+// the URI of the Image. The Image will be displayed using the <img> tag
 function ImageItem(inpData, inpDisplayProperty, inpCallback) {
-    //alert("CREATING TABLE ITEM");
     this.displayProperty = inpDisplayProperty;
     
     this.data = inpData;
@@ -12,7 +13,6 @@ function ImageItem(inpData, inpDisplayProperty, inpCallback) {
 ImageItem.prototype = {
 
     Render: function(appendDiv, edit) {
-        //alert("Rendering element");
         var rowDiv = document.createElement("div");
         rowDiv.className = "thumbnailDiv";
         for (prop in this.data) {
@@ -25,7 +25,7 @@ ImageItem.prototype = {
                 }
             }
         }
-        
+    
         if (edit && this.data.constructor.name != "ManualImageRow") {
             var editCover = document.createElement("div");
             editCover.className = "thumbnailEditCover";
@@ -48,10 +48,9 @@ ImageItem.prototype = {
     },
     
     eventHandler: function(element) {
-        //alert(this.data.constructor.name)
+
         if (this.data.constructor.name == "ManualImageRow") {
 
-            //alert("ADD ITEM");
             if (this.data.type == "Image") {
                 this.callback.AddPicture();
             } else if (this.data.type == "Video") {
@@ -76,9 +75,7 @@ ImageItem.prototype = {
     },
     
     itemSelected: function(event) {
-        //alert("item selected");
         if (this.selected) {
-            alert("deselect");
             this.selected = 0;
         } else {
             this.selected = 1;
@@ -89,8 +86,8 @@ ImageItem.prototype = {
     }
 }
 
+// Similarly to the ImageItem, the VideoItem is a Gallery item type, however, the video is displayed using HTML5 video playback. It also uses the default controls resulting in a workaround to support editing as detailed below
 function VideoItem(inpData, inpDisplayProperty, inpCallback) {
-    //alert("CREATING VIDEO ITEM");
     this.displayProperty = inpDisplayProperty;
     
     this.data = inpData;
@@ -103,10 +100,11 @@ function VideoItem(inpData, inpDisplayProperty, inpCallback) {
 VideoItem.prototype = {
 
     Render: function(appendDiv, edit) {
-        //alert("Rendering element");
         var rowDiv = document.createElement("div");
         rowDiv.className = "thumbnailDiv";
         
+        // If we are in edit mode, we cannot render the video tag at all otherwise it captures all click events and prevents us from performing operations such as delete (the video just starts playing). Therefore, a block
+        // box is rendered as a workaround for the meantime. A solution to this may be custom controls but I'm not sure this is supported by mobile safari (although mobile safari supports custom audio controls...)
         if (!edit) {
             
             for (prop in this.data) {
@@ -143,14 +141,11 @@ VideoItem.prototype = {
         }
         
         appendDiv.appendChild(rowDiv);
-        
-        rowDiv.addEventListener('click', this.eventHandler.bind(this), false);
+                
     },
     
     itemSelected: function(event) {
-        //alert("item selected");
         if (this.selected) {
-            alert("deselect");
             this.selected = 0;
         } else {
             this.selected = 1;
@@ -158,26 +153,11 @@ VideoItem.prototype = {
         
         event.stopPropagation();
         this.callback.Render();
-    },
-    
-    eventHandler: function(element) {
-        //alert(this.data.constructor.name)
-        if (this.data.constructor.name == "ManualImageRow") {
-
-            //alert("ADD ITEM");
-            this.callback.AddVideo();
-            
-        } else {
-
-            this.callback.RowSelected(this.data);
-            
-        }
-        
     }
 }
 
+// AudioItem uses the HTML5 audio tag functionality with custom controls to present a play and stop button
 function AudioItem(inpData, inpDisplayProperty, inpCallback) {
-    //alert("CREATING VIDEO ITEM");
     this.displayProperty = inpDisplayProperty;
     
     this.data = inpData;
@@ -191,7 +171,6 @@ function AudioItem(inpData, inpDisplayProperty, inpCallback) {
 AudioItem.prototype = {
 
     Render: function(appendDiv, edit) {
-        //alert("Rendering element");
         var rowDiv = document.createElement("div");
         rowDiv.className = "thumbnailDiv";
     
@@ -235,7 +214,6 @@ AudioItem.prototype = {
         
         appendDiv.appendChild(rowDiv);
         
-        //rowDiv.addEventListener('click', this.eventHandler.bind(this), false);
     },
     
     resetAudio: function(event) {
@@ -244,8 +222,7 @@ AudioItem.prototype = {
     },
     
     togglePlay: function(event) {
-        //alert("toggle play");
-        //alert(event.target.src);
+
         if (this.audio.paused) {
             event.target.src = "img/stop.png";
             this.audio.play();
@@ -258,7 +235,7 @@ AudioItem.prototype = {
     },
     
     itemSelected: function(event) {
-        //alert("item selected");
+
         if (this.selected) {
             this.selected = 0;
         } else {
@@ -267,21 +244,6 @@ AudioItem.prototype = {
         
         event.stopPropagation();
         this.callback.Render();
-    },
-    
-    eventHandler: function(element) {
-        //alert(this.data.constructor.name)
-        if (this.data.constructor.name == "ManualImageRow") {
-
-            //alert("ADD ITEM");
-            this.callback.AddVideo();
-            
-        } else {
-
-            this.callback.RowSelected(this.data);
-            
-        }
-        
     }
 }
 
@@ -291,7 +253,6 @@ function ManualImageRow(inpData, inpType) {
 }
 
 function GalleryWidget(inpData, inpCallback, inpType) {
-    //alert("GW CONST");
     this.data = inpData;
 
     this.rows = new Array();
@@ -301,18 +262,13 @@ function GalleryWidget(inpData, inpCallback, inpType) {
     
     this.callback = inpCallback;
     
-    //alert("IDENT: " + this.data.Identifier);
-    //alert("TYPE: " + Object.prototype.toString.call(this.data.Data));
     
     if (Object.prototype.toString.call(this.data.Data) == '[object Array]') {
-        //alert("is array");
         for (i = 0; i < this.data.Data.length; i++) {
             var newItem = "";
             if (this.type == "Image") {
-                //alert('Creating IMAGE gallery');
                 newItem = new ImageItem(this.data.Data[i], this.data.Value, this);
             } else if (this.type == "Video") {
-                //alert("Creating Video gallery");
                 newItem = new VideoItem(this.data.Data[i], this.data.Value, this);
             } else if (this.type == "Audio") {
                 newItem = new AudioItem(this.data.Data[i], this.data.Value, this);
@@ -328,7 +284,6 @@ function GalleryWidget(inpData, inpCallback, inpType) {
 GalleryWidget.prototype = {
 
     Render: function() {
-        //alert("RENDER TABLE");
         this.appendDiv.innerHTML = "";
         
         var tableContainer = document.createElement("div");
@@ -343,7 +298,6 @@ GalleryWidget.prototype = {
 
     
     EnableEdit: function() {
-        //alert("TABLE WIDGET IN EDIT MODE");
         this.state = 1;
         
         var addRow = new ManualImageRow("img/add.png", this.type);
@@ -370,14 +324,10 @@ GalleryWidget.prototype = {
     },
     
     DeleteSelectedItems: function() {
-        //alert("Delete selected items");
-        //alert(this.data.Identifier);
         
         for (i = 0; i < this.rows.length; i++) {
             if (this.rows[i].selected) {
-                //alert("row selected");
                 for (x = 0; x < this.data.Data.length; x++) {
-                    alert("row: " + this.rows[i].data[this.data.Identifier] + " == " + this.data.Data[x][this.data.Identifier]);
                     if (this.rows[i].data[this.data.Identifier] == this.data.Data[x][this.data.Identifier]) {
                         this.data.Data.splice(x,1);
                         this.rows.splice(i,1);

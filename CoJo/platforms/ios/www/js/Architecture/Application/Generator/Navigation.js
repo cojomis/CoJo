@@ -9,7 +9,7 @@ function Navigation(inpData, inpCallback, appendDiv) {
 Navigation.prototype = {
     Render: function(appendDiv) {
         appendDiv.innerHTML = "";
-        //alert("render nav");
+
         var navigationBar = document.createElement("div");
         navigationBar.className = "topNavigationBar";
         navigationBar.id = "topNavigationBar";
@@ -29,9 +29,7 @@ Navigation.prototype = {
         appendDiv.appendChild(contentBox);
         
         this.content.appendDiv = contentBox;
-        
-        //alert("after appending");
-        
+                
         this.content.Render();
     },
     
@@ -68,7 +66,6 @@ Navigation.prototype = {
     },
     
     RetrievedLocation: function(position) {
-        //alert("navigation location");
         this.callback.RetrievedLocation(position);
     },
     
@@ -93,7 +90,6 @@ Navigation.prototype = {
     },
     
     tabItemSelected: function(data) {
-        //alert("NAVIGATION TAB ITEM SELECTED");
         this.callback.tabItemSelected(data);
     }
 }

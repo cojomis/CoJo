@@ -1,3 +1,4 @@
+// When a new Story is created, an object that relates to the Story JSON sturcture must be created and appended to the state array
 function Story(inpHeadline) {
     var d = new Date();
     
@@ -9,51 +10,42 @@ function Story(inpHeadline) {
 
 
 function MyStoriesAppController() {
-    //alert("In constructor");
-    this.dController = new DomainController(this);
-    //this.storiesTable = new Table("table", this);
 
-    //alert(window.location);
+    this.dController = new DomainController(this);
     
     this.oldState = "";
     this.newState = "";
-    
-    //this.pageState = 0;
-    
+        
     this.prepare();
-    
-    //$.getJSON("json/Test/CreatePage.json", this.gotPageCreation.bind(this));
 }
 
 MyStoriesAppController.prototype = {
     
     gotPageCreation: function(json) {
-        //alert("GOT PAGE");
-        //alert(json.Page.Section[0].Name);
         json.Page.Section[0].Data.Data = this.newState.Story;
         this.navigation = new Navigation(json, this);
         this.navigation.Render(document.getElementById("appContainer"));
     },
     
+    // Downloads the JSON request document which contains details on what data needs to be retrieved to populate the page
     prepare: function() {
-        //alert("Getting JSON");
         $.getJSON("json/My_Stories/prepare.json", this.gotJSON.bind(this));
     },
-    
+        
     gotJSON: function(json) {
-        //alert(JSON.stringify(json));
         this.dController.Read(json);
     },
-    
+        
+    // The Domain Controller callback when it has read some data from the database (in this case, the results of the prepare message)
     readCallback: function(res) {
         this.oldState = JSON.parse(JSON.stringify(res));
         this.newState = JSON.parse(JSON.stringify(res));
         
-        $.getJSON("json/Test/CreatePage.json", this.gotPageCreation.bind(this));
+        //JSON file containing data to structure the page (see the Page Creation documentation)
+        $.getJSON("json/My_Stories/CreatePage.json", this.gotPageCreation.bind(this));
     },
     
     navigateToPage: function(page, storyID) {
-        //alert("Go to page: " + page + " with ID " + storyID);
         var url = page + "?id=" + storyID;
         window.location = url;
     },
@@ -62,17 +54,16 @@ MyStoriesAppController.prototype = {
         this.dController.UpdateState(this.newState, this.oldState);
     },
     
+    // The Domain Controller callback when the new and old states have been compared and the storage system updated accordingly
     UpdateComplete: function() {
         window.location.reload();
     },
     
     RowSelected: function(data) {
-        //alert("ROW SELECTED WITH STORY ID: " + data.STORY_ID);
-        var url = "summary.html?id=" + data.STORY_ID;
-        window.location = url;
+        this.navigateToPage("summary.html", data.STORY_ID);
     },
     
-    
+    // The Table Widget callback when the 'Add' row is selected. Adds a new Story to the this.newState
     AddItem: function() {
         var newStory = new Story("NEW STORY");
         

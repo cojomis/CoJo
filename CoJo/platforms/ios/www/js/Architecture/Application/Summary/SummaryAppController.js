@@ -1,51 +1,50 @@
 function SummaryAppController() {
-    //alert("In constructor");
     this.dController = new DomainController(this);
-    //this.storiesTable = new Table("table", this);
-
-    //alert(window.location);
     
     this.oldState = "";
     this.newState = "";
     
-    //this.pageState = 0;
+    // When the user navigates away from this page, UpdateState must be called as there is no edit->done flow, therefore, once the update is complete (UpdateComplete), we can navigate to the intended page, buffered in next
     this.next = "";
-    
-    
+        
     this.prepare();
     
-    //$.getJSON("json/Test/CreatePage.json", this.gotPageCreation.bind(this));
 }
 
 SummaryAppController.prototype = {
     
     gotPageCreation: function(json) {
-        //alert("GOT PAGE");
-        //alert(json.Page.Section[0].Name);
+        
+        // Section 0 refers to the Story details (Headline, date, etc)
         json.Page.Section[0].Data.Data = this.newState.Story[0];
+        // Section 1 refers to the note associated with the Story
         json.Page.Section[1].Data.Data = this.newState.Story[0].Note;
+        
         this.navigation = new Navigation(json, this);
         this.navigation.Render(document.getElementById("appContainer"));
     },
     
     prepare: function() {
-        //alert("Getting JSON");
         $.getJSON("json/Summary/prepare.json", this.gotJSON.bind(this));
     },
     
     gotJSON: function(json) {
-        //alert(JSON.stringify(json));
         
+        // Retrieve the Story ID from the request URI
         var loc = window.location.toString();
-        //alert("LOCATION: " + loc);
-        var storyID = loc.substr(loc.length-1, 1);
+        var i = loc.length;
+        while (loc[i] != '=') {
+            i--;
+        }
+        
+        var storyID = loc.substr(i+1, (loc.length-1)-i);
+        
         json.Story[0].STORY_ID = storyID;
         
         this.dController.Read(json);
     },
     
     navigateToPage: function(page, storyID) {
-        //alert("Go to page: " + page + " with ID " + storyID);
         var url = page + "?id=" + storyID;
         window.location = url;
     },
@@ -53,13 +52,8 @@ SummaryAppController.prototype = {
     readCallback: function(res) {
         this.oldState = JSON.parse(JSON.stringify(res));
         this.newState = JSON.parse(JSON.stringify(res));
-        
-        /*for(i = 0; i < res.Story.length; i++) {
-            alert(res.Story[i].Headline);
-            this.storiesTable.AddRow(res.Story[i].Headline, res.Story[i].STORY_ID);
-        }*/
-        
-        $.getJSON("json/Test/CreateDetails.json", this.gotPageCreation.bind(this));
+
+        $.getJSON("json/Summary/CreateDetails.json", this.gotPageCreation.bind(this));
     },
     
     UpdateState: function() {
@@ -72,14 +66,7 @@ SummaryAppController.prototype = {
         }
     },
     
-    RowSelected: function(data) {
-        //this.UpdateState();
-        
-        //window.location = "media.html?id=" + this.newState.Story[0].STORY_ID;
-    },
-    
     tabItemSelected: function(data) {
-        //alert(this.newState.Story[0].Note.length);
         this.next = data;
         this.UpdateState();
     }

@@ -5,20 +5,20 @@ function MapWidget(inpData, inpCallback) {
     this.appendDiv;
     
     this.map;
-    
-
 }
 
 MapWidget.prototype = {
     Render: function() {
         var options;
         
+        // If the Story already has a location, map it
         if (this.data.Data.Latitude != null) {
             options = {
                 center: new google.maps.LatLng(this.data.Data.Latitude, this.data.Data.Longitude),
                 zoom: 8
             };
         } else {
+            // Default options
             options = {
                 center: new google.maps.LatLng(-34.397, 150.644),
                 zoom: 8
@@ -37,6 +37,7 @@ MapWidget.prototype = {
     
     },
     
+    // HTML5 geolocation
     GetCurrentLocation: function() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this.locationRetrieved.bind(this), this.locationError);
@@ -44,7 +45,6 @@ MapWidget.prototype = {
     },
     
     locationRetrieved: function(position) {
-        //alert("Location retrieved");
         var initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         
         var infoWindow = new google.maps.InfoWindow({

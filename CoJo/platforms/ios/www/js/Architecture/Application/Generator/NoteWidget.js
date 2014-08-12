@@ -8,7 +8,6 @@ function NoteWidget(inpData, inpCallback) {
     this.callback = inpCallback;
     
     if (this.data.Data.length < 1) {
-        //alert("creating new note");
         var nNote = new Note();
         this.data.Data.push(nNote);
     }
@@ -18,7 +17,6 @@ function NoteWidget(inpData, inpCallback) {
 
 NoteWidget.prototype = {
     Render: function() {
-        //alert("rendering note");
         var tArea = document.createElement("textarea");
         tArea.rows = "20";
         tArea.cols = "49";

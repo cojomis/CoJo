@@ -1,11 +1,13 @@
+// A DataTableItem is used for displaying a single parameter from an array of objects. For example, the My Stories page uses this row type to display Story headlines which can be selected to view the Story
 function DataTableItem(inpData, inpDisplayProperty, inpCallback) {
-    //alert("CREATING TABLE ITEM");
     this.displayProperty = inpDisplayProperty;
     
     this.data = inpData;
     
     this.callback = inpCallback;
     this.appendDiv = "";
+    
+    // Used to determine which rows should be deleted when DeleteSelectedItems is called
     this.selected = 0;
     
 }
@@ -13,7 +15,6 @@ function DataTableItem(inpData, inpDisplayProperty, inpCallback) {
 DataTableItem.prototype = {
 
     Render: function(appendDiv) {
-        //alert("Rendering row");
         var rowDiv = document.createElement("div");
         rowDiv.className = "row";
         for (prop in this.data) {
@@ -26,7 +27,7 @@ DataTableItem.prototype = {
                         text.innerHTML = this.data[prop];
                     } else {
                         text.className = "dataRowText";
-                        text.innerHTML = this.data[prop];
+                        text.innerHTML = decodeURIComponent(this.data[prop]);
                         
                         if (this.selected) {
                             var selectedDiv = document.createElement("div");
@@ -48,16 +49,13 @@ DataTableItem.prototype = {
     },
     
     eventHandler: function(element) {
-        //alert(this.data.constructor.name)
         if (this.data.constructor.name == "ManualDataRow") {
-            //alert(this.data);
             if (this.data.data == "Add") {
-                //alert("ADD ITEM");
                 this.callback.AddItem();
             }
         } else {
+            // If the Table Widget is in edit mode, selecting a row should toggle the selection of said row
             if (this.callback.state == 1) {
-                //alert("ITEM SELECTED");
                 if (this.selected == 0) {
                     this.selected = 1;
                     this.callback.Render();
@@ -67,7 +65,7 @@ DataTableItem.prototype = {
                     this.callback.Render();
                 }
                 
-                this.Render();
+                
             } else {
                 this.callback.RowSelected(this.data);
             }
@@ -76,116 +74,12 @@ DataTableItem.prototype = {
     }
 }
 
-function AudioTableItem(inpData, inpDisplayProperty, inpCallback) {
-    //alert("CREATING AUDIO ITEM");
-    this.displayProperty = inpDisplayProperty;
-    
-    this.data = inpData;
-    
-    this.callback = inpCallback;
-    this.appendDiv = "";
-    this.selected = 0;
-    
-    this.audio = "";
-    
-}
-
-AudioTableItem.prototype = {
-
-    Render: function(appendDiv) {
-        //alert("Rendering row");
-        var rowDiv = document.createElement("div");
-        rowDiv.className = "row";
-        for (prop in this.data) {
-            if (typeof(this.data[prop]) === "string") {
-                if (prop == this.displayProperty) {
-                    //alert("rendering audio");
-                    //alert(this.data[prop]);
-                    this.audio = document.createElement("audio");
-
-                    this.audio.setAttribute('src', this.data[prop]);
-                    
-                    var play = document.createElement("div");
-                    play.className = "audioPlayerItem";
-                    
-                    var playImg = document.createElement("img");
-                    playImg.src = "img/play.png";
-                    
-                    play.appendChild(playImg);
-                    
-                    rowDiv.appendChild(play);
-                    play.addEventListener('click', this.playAudio.bind(this), false);
-                    
-                    var stop = document.createElement("div");
-                    stop.className = "audioPlayerItem";
-                    
-                    var stopImg = document.createElement("img");
-                    stopImg.src = "img/stop.png";
-                    
-                    stop.appendChild(stopImg);
-                    
-                    rowDiv.appendChild(stop);
-                    
-                    stop.addEventListener('click', this.stopAudio.bind(this), false);
-                        
-                    if (this.selected) {
-                        var selectedDiv = document.createElement("div");
-                        selectedDiv.className = "selected";
-                        
-                        rowDiv.appendChild(selectedDiv);
-                    }
-                        
-                }
-            }
-        }
-        
-        appendDiv.appendChild(rowDiv);
-        
-        rowDiv.addEventListener('click', this.eventHandler.bind(this), false);
-    },
-    
-    playAudio: function(event) {
-        this.audio.play();
-        event.stopPropagation();
-    },
-    
-    stopAudio: function(event) {
-        this.audio.load();
-        event.stopPropagation();
-    },
-    
-    eventHandler: function(element) {
-        //alert(this.data.constructor.name)
-        if (this.data.constructor.name == "ManualDataRow") {
-            //alert(this.data);
-            if (this.data.data == "Add") {
-                //alert("ADD ITEM");
-                this.callback.AddAudio();
-            }
-        } else {
-            if (this.callback.state == 1) {
-                //alert("ITEM SELECTED");
-                if (this.selected == 0) {
-                    this.selected = 1;
-                    this.callback.Render();
-                    
-                } else {
-                    this.selected = 0;
-                    this.callback.Render();
-                }
-                
-                this.Render();
-            }
-        }
-    }
-}
-
 function ManualDataRow(inpData) {
     this.data = inpData;
 }
 
+// A table row item type that supports a header and an input field to allow the user to edit data
 function InputTableItem(inpData, inpDisplayProperty, inpCallback) {
-    //alert("CREATING INPUT TABLE ITEM");
     this.displayProperty = inpDisplayProperty;
     
     this.data = inpData;
@@ -196,7 +90,6 @@ function InputTableItem(inpData, inpDisplayProperty, inpCallback) {
 InputTableItem.prototype = {
 
     Render: function(appendDiv) {
-        //alert("Rendering row");
         var rowDiv = document.createElement("div");
         rowDiv.className = "row";
         for (prop in this.data) {
@@ -222,12 +115,9 @@ InputTableItem.prototype = {
                 }
             }
         }
-        
-        //rowDiv.addEventListener('click', this.updateValue.bind(this), false);
-        
+                
         appendDiv.appendChild(rowDiv);
         
-        //rowDiv.addEventListener('click', this.eventHandler.bind(this), false);
     },
     
     InputChanged: function(element) {
@@ -238,27 +128,10 @@ InputTableItem.prototype = {
                 }
             }
         }
-    },
-    
-    updateValue: function(element) {
-        for (prop in this.data) {
-            if (typeof(this.data[prop]) === "string") {
-                if (prop == this.displayProperty) {
-                    this.data[prop] = encodeURIComponent("Ive updated the value");
-                    this.callback.RowSelected();
-                }
-            }
-        }
-    },
-    
-    eventHandler: function(element) {
-        //alert("ROW TAPPED: " + this.value);
-        
     }
 }
 
 function TableWidget(inpData, inpCallback, inpType) {
-    //alert("TW CONST");
     this.data = inpData;
 
     this.rows = new Array();
@@ -269,27 +142,16 @@ function TableWidget(inpData, inpCallback, inpType) {
     
     this.callback = inpCallback;
     
-    //alert("IDENT: " + this.data.Identifier);
-    //alert("TYPE: " + Object.prototype.toString.call(this.data.Data));
-    
     if (Object.prototype.toString.call(this.data.Data) == '[object Array]') {
-        //alert("is array");
+
         for (i = 0; i < this.data.Data.length; i++) {
-            var newItem = "";
-            
-            if (this.type == "Audio") {
-                newItem = new AudioTableItem(this.data.Data[i], this.data.Value, this);
-            } else {
-                newItem = new DataTableItem(this.data.Data[i], this.data.Value, this);
-            }
+            var newItem = new DataTableItem(this.data.Data[i], this.data.Value, this);
             
             this.rows.push(newItem);
         }
         
     } else if (Object.prototype.toString.call(this.data.Data) == '[object Object]') {
-        //alert("is object");
         for (prop in this.data.Data) {
-            //alert(typeof(this.data.Data[prop]));
             if (typeof(this.data.Data[prop]) == "string") {
                 var newItem = new InputTableItem(this.data.Data, prop, this);
                 this.rows.push(newItem);
@@ -303,7 +165,6 @@ function TableWidget(inpData, inpCallback, inpType) {
 TableWidget.prototype = {
 
     Render: function() {
-        //alert("RENDER TABLE");
         this.appendDiv.innerHTML = "";
         
         var tableContainer = document.createElement("div");
@@ -319,7 +180,6 @@ TableWidget.prototype = {
 
     
     EnableEdit: function() {
-        //alert("TABLE WIDGET IN EDIT MODE");
         this.state = 1;
         
         var addRow = new ManualDataRow("Add");
@@ -334,32 +194,23 @@ TableWidget.prototype = {
         this.Render();
     },
     
+    // Callback when a row is selected that is the 'Add' row
     AddItem: function() {
-        if (this.type == "Audio") {
-            this.callback.AddAudio();
-        } else {
-            this.callback.AddItem();
-        }
+
+        this.callback.AddItem();
 
     },
     
-    AddAudio: function() {
-        this.callback.AddAudio();
-    },
-    
+    // Callback when a DataTableItem row is selected
     RowSelected: function(data) {
         this.callback.RowSelected(data);
     },
     
     DeleteSelectedItems: function() {
-        //alert("Delete selected items");
-        //alert(this.data.Identifier);
         
         for (i = 0; i < this.rows.length; i++) {
             if (this.rows[i].selected) {
-                //alert("row selected");
                 for (x = 0; x < this.data.Data.length; x++) {
-                    //alert("row: " + this.rows[i].data[this.data.Identifier] + " == " + this.data.Data[x][this.data.Identifier]);
                     if (this.rows[i].data[this.data.Identifier] == this.data.Data[x][this.data.Identifier]) {
                         this.data.Data.splice(x,1);
                         this.rows.splice(i,1);

@@ -17,10 +17,7 @@ DomainController.prototype = {
     
     // Retrieves information from the database. It takes a Javascript object created from a JSON file, detailing what should be retrieved
     Read: function(inp) {
-        //alert("READ");
-        this.StorageC.Read(inp);
-        
-        //alert("Done");
+        this.StorageC.Read(inp);        
     },
     
     UpdateComplete: function() {
@@ -30,11 +27,9 @@ DomainController.prototype = {
     // Called by the StorageController when the results from a read operation have been returned from the database (SQLResultSet)
     readCallback: function(res) {
         this.callback.readCallback(res);
-        //alert(res.rows.item(0).URI);
     },
     
     captureImage: function(storyID) {
-        //alert("IN DCONTROLLER");
         this.story = storyID;
         this.MediaBrowser.captureImage();
     },
@@ -52,7 +47,6 @@ DomainController.prototype = {
     retrievedImage: function(inpURI) {
         this.URI = inpURI;
         this.callback.retrievedImage(inpURI);
-
     },
     
     retrievedVideo: function(inpURI) {
@@ -63,7 +57,6 @@ DomainController.prototype = {
     retrievedAudio: function(inpURI) {
         this.URI = inpURI;
         this.callback.retrievedAudio(inpURI);
-        // PASS TO APPLICATION LAYER
-    },
+    }
     
 }

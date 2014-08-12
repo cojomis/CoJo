@@ -4,10 +4,7 @@ function Content(inpData, inpCallback) {
     this.sections = new Array();
     this.appendDiv;
     
-    //alert("LENGTH: " + this.data.length);
-
     for(var i = 0; i < this.data.length; i++) {
-        //alert("Creating section");
         var newSection = new Section(this.data[i], this);
         this.sections.push(newSection);
     }
@@ -18,7 +15,6 @@ function Content(inpData, inpCallback) {
 
 Content.prototype = {
     Render: function() {
-            //alert("DIV: " + this.appendDiv);
             this.appendDiv.innerHTML = "";
             
             if (this.sections.length > 1) {
@@ -48,21 +44,20 @@ Content.prototype = {
             
             }
         
-            
-            this.sections[this.currentSection].Render(this.appendDiv);
-        
-            
+            this.sections[this.currentSection].Render(this.appendDiv);        
     },
     
     eventHandler: function(element) {
-        //alert(element.target.parentNode.id);
-        this.currentSection = element.target.parentNode.id;
-        this.Render();
+        if (element.target.id != "") {
+            this.currentSection = element.target.id
+        } else {
+            this.currentSection = element.target.parentNode.id;
+        }
         
+        this.Render();     
     },
     
     RetrievedLocation: function(position) {
-        //alert("content loction");
         this.callback.RetrievedLocation(position);
     },
     
@@ -70,11 +65,12 @@ Content.prototype = {
         this.callback.renderCanEdit();
     },
     
+    // Called by the Navigation bar when the user clicks the 'Edit' button
     EnableEdit: function() {
-        //alert("CONTENT EDIT");
         this.sections[this.currentSection].EnableEdit();
     },
     
+    // Called by the Navigation bar when the user clicks the 'Done' button
     DoneEdit: function() {
         this.sections[this.currentSection].DoneEdit();
     },
@@ -100,7 +96,6 @@ Content.prototype = {
     },
     
     tabItemSelected: function(data) {
-        //alert("CONTENT TAB ITEM SELECTED");
         this.callback.tabItemSelected(data);
     }
 }

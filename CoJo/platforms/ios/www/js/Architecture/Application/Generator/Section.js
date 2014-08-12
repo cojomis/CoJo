@@ -3,6 +3,7 @@ function Section(inpData, inpCallback) {
     this.callback = inpCallback;
     this.widget = "";
     
+    // Reads the type from the configuration JSON file to determine what widget should be used to display the data for the specific section
     if (this.data.Type == "Table") {
         this.widget = new TableWidget(inpData.Data, this, this.data.SubType);
     } else if (this.data.Type == "Gallery") {
@@ -14,33 +15,30 @@ function Section(inpData, inpCallback) {
     }
     
     this.tabMode = "";
-    this.tabBar = new ViewTabBar(this);
-    
-    
+    this.tabBar = new ViewTabBar(this); 
 }
 
 Section.prototype = {
     Render: function(appendDiv) {
-        //alert("REND SECTION");
 
         var widgetContainer = document.createElement("div");
         widgetContainer.className = "widgetContainer";
         appendDiv.appendChild(widgetContainer);
         
+        // If the JSON configuration file states that this section has 'edit' functionality, the content section and subsequent navigation bar needs to be informed (to display an edit button)
         if (this.data.TabBar.Edit.canEdit == "True") {
             this.callback.renderCanEdit();
         }
         
         this.widget.appendDiv = widgetContainer;
-        //alert("WIDGET");
+
         this.widget.Render();
-        
-        //alert("after");
-        
+                
         var tabBarContainer = document.createElement("div");
         tabBarContainer.className = "tabBarContainer";
         appendDiv.appendChild(tabBarContainer);
         
+        // If the JSON configuration file states that the basic tab bar should be present, render it onto the screen
         if (this.data.TabBar.viewBar == "True") {
             this.tabBar.Render(tabBarContainer);
         }
@@ -48,12 +46,10 @@ Section.prototype = {
     },
     
     RetrievedLocation: function(position) {
-        //alert("section location");
         this.callback.RetrievedLocation(position);
     },
     
     EnableEdit: function() {
-        //alert("enable edit");
         var tabBarCont = document.getElementsByClassName("tabBarContainer");
         
         if (this.data.TabBar.Edit.Type == "Basic") {

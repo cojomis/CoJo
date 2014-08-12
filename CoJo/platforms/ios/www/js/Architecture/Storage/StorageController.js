@@ -17,6 +17,7 @@ function SQLStorageController(inpCallback) {
     this.Story;
     this.currentArray;
     
+    // When UpdateState is called, any updates that are required are added to this array in their SQL format. They are then executed as a single transaction
     this.statements = new Array();
 
     
@@ -37,26 +38,18 @@ SQLStorageController.prototype = {
     
     //  Iterates over each array, calling Check to see if any data needs retrieving form the database
     ParseRead: function() {
-        //alert("IN PARSE READ");
         var i = 0;
-        //alert("Story Length: " + this.Story.length);
         for (i = 0; i < this.Story.length; i++) {
             // The story is always checked first
             var used = this.Check(this.Story, this.Story[i], "", "Story");
-            
-            //alert("Used: " + used);
-            
+                        
             if (used) {
                 return;
             }
-            
-            //alert("Checking next tables");
-            
+                        
             // Once the story has been checked, any related subtables can be checked (i.e. Image, Video, etc). Note that this only work for tables 'two deep'. It is not a completely generic solution
             for (x in this.Story[i]) {
-                //alert("X: " + x);
                 if (this.Story[i][x] instanceof Array) {
-                    //alert("TABLE : " + x);
                     used = this.Check(this.Story[i][x], this.Story[i][x][0], this.Story[i].STORY_ID, x);
                     
                     if (used) {
@@ -78,11 +71,8 @@ SQLStorageController.prototype = {
      * Checks the relevant object to see whether it has been populated from the database or whether data needs to be retrieved from the database
      */
     Check: function(arr, obj, storyID, table) {
-        //alert("IN CHECK");
         this.currentArray = arr;
-        
-        //alert(arr.Headline);
-        
+                
         // If this method has already been run on the object and nothing was returned from the database, it is still removed as the search has been executed (therefore the array contains no elements)
         if (typeof(obj) != 'undefined') { 
             var params = "";
@@ -91,7 +81,6 @@ SQLStorageController.prototype = {
             var execute = false;
             
             for (i in obj) {
-                //alert(i);
                 if (typeof(obj[i]) == 'string') {
                     params += table + "." + i + ",";
                     if (obj[i] != "" && obj[i] != "*") {
@@ -126,7 +115,6 @@ SQLStorageController.prototype = {
             }
 
             if (execute) {
-                //alert(statement);
             
                 this.database.Read(statement);
             
@@ -143,29 +131,20 @@ SQLStorageController.prototype = {
     
     // Once the read query has been executed, the results are parsed and any results are added to the JSON structure
     readCallback: function(res) {
-        //alert("Returned rows: " + res.rows.length);
-        
-        //alert(this.currentArray);
         
         // Remove the search element before adding the returned results (also stops the search being executed twice as explained above)
         var template = this.currentArray.pop();
-        //alert(template);
-        //alert("retrieved");
+
         
         for (i = 0; i < res.rows.length; i++) {
             
-            //alert("Next row");
             // Copy the template to create a new 'element'
             var tmp = JSON.parse(JSON.stringify(template));
-            //alert(tmp);
             
             for (x in tmp) {
-                //alert("X: " + x);
                 for (q in res.rows.item(i)) {
-                    //alert("Q: " + q);
                     // When matching parameters are found in the template and the returned results, match them up
                     if (x == q) {
-                        //alert("Setting " + x + " = " + res.rows.item(i)[q]);
                         tmp[x] = res.rows.item(i)[q];
                     }
                 }
@@ -191,7 +170,6 @@ SQLStorageController.prototype = {
         this.RecurseDeleted(this.oldState[0], this.newState[0], 0);
         
         this.database.UpdateState(this.statements);
-        //alert("DONE");
                 
     },
     
@@ -214,7 +192,6 @@ SQLStorageController.prototype = {
                 // Find and recurse through any subtables (Image, Video, etc)
                 for (x = 0; x < newArray[i].length; x++) {
                     if (newArray[i][x] instanceof Array) {
-                        //alert("CHECKING SUB TABLES");
                         this.RecurseNew(newArray[i][x], oldArray[i][x], sID);
                     }
                 }
@@ -253,8 +230,6 @@ SQLStorageController.prototype = {
                 for (x = 1; x < obj.length; x++) {
                     if (!(obj[x] instanceof Array) && obj[x].value != arr[i][x].value) {
                         vals += obj[x].key + "='" + obj[x].value + "',";
-                    } else {
-                        // No update
                     }
                          
                 }
@@ -270,10 +245,8 @@ SQLStorageController.prototype = {
 
                     }
                     
-                    //alert(statement);
                 
                     this.statements.push(statement);
-                    //this.database.Update(statement);
                 }
                 
             }
@@ -317,12 +290,8 @@ SQLStorageController.prototype = {
                 statement = "INSERT INTO " + arr[0] + " (" + cols + ") VALUES (" + vals + ")";
             }
             
-            //alert(statement);
             this.statements.push(statement);
-            //this.database.Create(statement);
-        } else {
-            // Nothing to create
-        }
+        } 
     },
     
     CheckDelete: function(obj, arr) {
@@ -343,16 +312,9 @@ SQLStorageController.prototype = {
             } else {
                 statement = "DELETE FROM " + arr[0] + " WHERE STORY_ID='" + obj[0].value + "'";
             }
-            
-            
-            //alert(statement);
-            
+                        
             this.statements.push(statement);
-            //this.database.Delete(statement);
-        } else {
-            // Nothing to delete
-        }    
-        
+        }  
     },
     
     Parse: function(data, arr) {
