@@ -66,8 +66,8 @@ Section.prototype = {
         // IS THIS NEEDED WITH PAGE RELOAD?
     },
     
-    AddItem: function() {
-        this.callback.AddItem();
+    EventHandler: function(event) {
+        this.callback.EventHandler(event);
     },
     
     AddPicture: function() {
@@ -80,10 +80,6 @@ Section.prototype = {
     
     AddAudio: function() {
         this.callback.AddAudio();
-    },
-    
-    RowSelected: function(data) {
-        this.callback.RowSelected(data);
     },
     
     tabItemSelected: function(data) {

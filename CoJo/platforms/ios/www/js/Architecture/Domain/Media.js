@@ -17,15 +17,15 @@ MediaController.prototype = {
     },
     
     captureImageSuccess: function(mediaFiles) {
-        this.callback.retrievedImage(mediaFiles[0].fullPath);
+        this.callback.retrievedImage(mediaFiles[0]);
     },
     
     captureVideoSuccess: function(mediaFiles) {
-        this.callback.retrievedVideo(mediaFiles[0].fullPath);
+        this.callback.retrievedVideo(mediaFiles[0]);
     },
     
     captureAudioSuccess: function(mediaFiles) {
-        this.callback.retrievedAudio(mediaFiles[0].fullPath);
+        this.callback.retrievedAudio(mediaFiles[0]);
     },
     
     captureFailure: function(error) {

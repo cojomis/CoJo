@@ -69,8 +69,8 @@ Navigation.prototype = {
         this.callback.RetrievedLocation(position);
     },
     
-    AddItem: function() {
-        this.callback.AddItem();  
+    EventHandler: function(event) {
+        this.callback.EventHandler(event);
     },
     
     AddPicture: function() {
@@ -83,10 +83,6 @@ Navigation.prototype = {
     
     AddAudio: function() {
         this.callback.AddAudio();
-    },
-
-    RowSelected: function(data) {
-        this.callback.RowSelected(data);
     },
     
     tabItemSelected: function(data) {
