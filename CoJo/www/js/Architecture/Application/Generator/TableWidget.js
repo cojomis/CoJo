@@ -51,7 +51,11 @@ DataTableItem.prototype = {
     eventHandler: function(element) {
         if (this.data.constructor.name == "ManualDataRow") {
             if (this.data.data == "Add") {
-                this.callback.AddItem();
+                alert("add item");
+                
+                var evt = new AppEvent(this, "additem", "");
+                this.callback.EventHandler(evt);
+                //this.callback.AddItem();
             }
         } else {
             // If the Table Widget is in edit mode, selecting a row should toggle the selection of said row
@@ -67,7 +71,7 @@ DataTableItem.prototype = {
                 
                 
             } else {
-                this.callback.RowSelected(this.data);
+                this.callback.EventHandler(new AppEvent(this, "rowselected", this.data));
             }
         }
         
@@ -194,16 +198,8 @@ TableWidget.prototype = {
         this.Render();
     },
     
-    // Callback when a row is selected that is the 'Add' row
-    AddItem: function() {
-
-        this.callback.AddItem();
-
-    },
-    
-    // Callback when a DataTableItem row is selected
-    RowSelected: function(data) {
-        this.callback.RowSelected(data);
+    EventHandler: function(event) {
+        this.callback.EventHandler(event);
     },
     
     DeleteSelectedItems: function() {

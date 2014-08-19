@@ -68,23 +68,23 @@ MediaAppController.prototype = {
         window.location.reload();
     },
     
-    RowSelected: function(data) {
-        this.UpdateState();
-    },
-    
-    AddPicture: function() {
-        this.dController.captureImage(this.newState.Story[0].STORY_ID);
-    },
-    
-    AddVideo: function() {
-        this.dController.captureVideo(this.newState.Story[0].STORY_ID);
-    },
-    
-    AddAudio: function() {
-        this.dController.captureAudio(this.newState.Story[0].STORY_ID);
+    EventHandler: function(event) {
+        switch (event.name) {
+            case "addmedia": {
+                alert("add media");
+                if (event.data == "Image") {
+                    this.dController.captureImage(this.newState.Story[0].STORY_ID);
+                } else if (event.data == "Video") {
+                    this.dController.captureVideo(this.newState.Story[0].STORY_ID);
+                } else if (event.data == "Audio") {
+                    this.dController.captureAudio(this.newState.Story[0].STORY_ID);
+                }
+            }
+        }
     },
     
     retrievedImage: function(URI) {
+        alert("URI: " + URI);
         var nImg = new NewImage(URI);
         this.newState.Story[0].Image.push(nImg);
         

@@ -75,8 +75,8 @@ Content.prototype = {
         this.sections[this.currentSection].DoneEdit();
     },
     
-    AddItem: function() {
-        this.callback.AddItem();  
+    EventHandler: function(event) {
+        this.callback.EventHandler(event);
     },
     
     AddPicture: function() {
@@ -89,10 +89,6 @@ Content.prototype = {
     
     AddAudio: function() {
         this.callback.AddAudio();
-    },
-    
-    RowSelected: function(data) {
-        this.callback.RowSelected(data);
     },
     
     tabItemSelected: function(data) {

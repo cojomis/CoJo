@@ -63,8 +63,20 @@ MyStoriesAppController.prototype = {
         this.navigateToPage("summary.html", data.STORY_ID);
     },
     
+    EventHandler: function(event) {
+        switch (event.name) {
+            case "additem": {
+                this.CreateStory();
+            }
+            
+            case "rowselected": {
+                this.RowSelected(event.data);
+            }
+        }
+    },
+    
     // The Table Widget callback when the 'Add' row is selected. Adds a new Story to the this.newState
-    AddItem: function() {
+    CreateStory: function() {
         var newStory = new Story("NEW STORY");
         
         this.newState.Story.push(newStory);

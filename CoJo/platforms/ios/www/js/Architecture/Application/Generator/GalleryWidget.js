@@ -50,15 +50,8 @@ ImageItem.prototype = {
     eventHandler: function(element) {
 
         if (this.data.constructor.name == "ManualImageRow") {
-
-            if (this.data.type == "Image") {
-                this.callback.AddPicture();
-            } else if (this.data.type == "Video") {
-                this.callback.AddVideo();
-            } else if (this.data.type == "Audio") {
-                this.callback.AddAudio();
-            }
             
+            this.callback.EventHandler(new AppEvent(this, "addmedia", this.data.type));
             
         } else {
             if (this.callback.state == 1) {
@@ -67,8 +60,6 @@ ImageItem.prototype = {
                 } else {
                     this.selected = 0;
                 }
-            } else {
-                this.callback.RowSelected(this.data);
             }
         }
         
@@ -307,20 +298,8 @@ GalleryWidget.prototype = {
         this.Render();
     },
     
-    AddPicture: function() {
-        this.callback.AddPicture();
-    },
-    
-    AddVideo: function() {
-        this.callback.AddVideo();
-    },
-    
-    AddAudio: function() {
-        this.callback.AddAudio();
-    },
-    
-    RowSelected: function(data) {
-        this.callback.RowSelected(data);
+    EventHandler: function(event) {
+        this.callback.EventHandler(event);
     },
     
     DeleteSelectedItems: function() {

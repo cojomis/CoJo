@@ -2,10 +2,13 @@ function DomainController(inpCallback) {
 
     this.MediaBrowser = new MediaController(this);
     this.StorageC = new SQLStorageController(this);
+    this.fileIO = new FileIO(this);
     
     this.callback = inpCallback;
     this.URI = "";
     this.story = "";
+    
+    this.mediaType;
 }
 
 DomainController.prototype = {
@@ -46,17 +49,39 @@ DomainController.prototype = {
     
     retrievedImage: function(inpURI) {
         this.URI = inpURI;
-        this.callback.retrievedImage(inpURI);
+        this.mediaType = "Image";
+        this.fileIO.ResolvePermURI(inpURI.fullPath);
     },
     
     retrievedVideo: function(inpURI) {
         this.URI = inpURI;
-        this.callback.retrievedVideo(inpURI);
+        this.mediaType = "Video";
+        this.fileIO.ResolvePermURI(inpURI.fullPath);
     },
     
     retrievedAudio: function(inpURI) {
         this.URI = inpURI;
-        this.callback.retrievedAudio(inpURI);
+        this.mediaType = "Audio;"
+        this.fileIO.ResolvePermURI(inpURI.fullPath);
+    },
+    
+    permSuccess: function(URI) {
+        switch (this.mediaType) {
+            case "Image": {
+                this.callback.retrievedImage(URI);
+                break;
+            }
+            
+            case "Video": {
+                this.callback.retrievedVideo(URI);
+                break;
+            }
+            
+            case "Audio": {
+                this.callback.retrievedAudio(URI);
+                break
+            }
+        }
     }
     
 }
