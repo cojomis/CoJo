@@ -67,10 +67,12 @@ MyStoriesAppController.prototype = {
         switch (event.name) {
             case "additem": {
                 this.CreateStory();
+                break;
             }
             
             case "rowselected": {
                 this.RowSelected(event.data);
+                break;
             }
         }
     },
