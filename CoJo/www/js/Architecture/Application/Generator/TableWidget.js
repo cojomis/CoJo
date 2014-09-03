@@ -51,7 +51,7 @@ DataTableItem.prototype = {
     eventHandler: function(element) {
         if (this.data.constructor.name == "ManualDataRow") {
             if (this.data.data == "Add") {
-                alert("add item");
+                //alert("add item");
                 
                 var evt = new AppEvent(this, "additem", "");
                 this.callback.EventHandler(evt);

@@ -25,7 +25,7 @@ FileIO.prototype = {
         fileName += new Date().getTime();
         fileName += this.entry.name;
         
-        alert("fn: " + fileName);
+        //alert("fn: " + fileName);
         this.entry.moveTo(dir, fileName, this.successMove.bind(this), this.resOnError); 
     },
     

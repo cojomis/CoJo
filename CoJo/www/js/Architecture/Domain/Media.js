@@ -29,6 +29,6 @@ MediaController.prototype = {
     },
     
     captureFailure: function(error) {
-        alert("CAPTURE FAILURE");
+        //alert("CAPTURE FAILURE");
     }
 }

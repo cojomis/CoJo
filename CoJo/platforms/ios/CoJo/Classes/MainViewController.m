@@ -123,7 +123,7 @@
     return [super webView:theWebView didFailLoadWithError:error];
 }
 
-- (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
+- (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType/Users/simonodonoghue1992/Desktop/nand2tetris/projects/02/FullAdder.hdl
 {
     return [super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType];
 }

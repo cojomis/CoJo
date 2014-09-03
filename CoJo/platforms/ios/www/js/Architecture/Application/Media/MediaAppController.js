@@ -71,7 +71,6 @@ MediaAppController.prototype = {
     EventHandler: function(event) {
         switch (event.name) {
             case "addmedia": {
-                alert("add media");
                 if (event.data == "Image") {
                     this.dController.captureImage(this.newState.Story[0].STORY_ID);
                 } else if (event.data == "Video") {
@@ -84,7 +83,6 @@ MediaAppController.prototype = {
     },
     
     retrievedImage: function(URI) {
-        alert("URI: " + URI);
         var nImg = new NewImage(URI);
         this.newState.Story[0].Image.push(nImg);
         

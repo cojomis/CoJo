@@ -61,7 +61,7 @@ DomainController.prototype = {
     
     retrievedAudio: function(inpURI) {
         this.URI = inpURI;
-        this.mediaType = "Audio;"
+        this.mediaType = "Audio";
         this.fileIO.ResolvePermURI(inpURI.fullPath);
     },
     
@@ -78,6 +78,7 @@ DomainController.prototype = {
             }
             
             case "Audio": {
+                //alert(URI);
                 this.callback.retrievedAudio(URI);
                 break
             }
